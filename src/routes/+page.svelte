@@ -136,7 +136,7 @@
 <div class='container mx-auto'>
 	<section id='portfolio' class='portfolio-section py-24'>
 		<h2 class='text-5xl font-bold text-center mb-24'>New Work</h2>
-		<ul class='flex border border-gray-700 rounded w-fit mx-auto mb-24 p-1'>
+		<ul class='flex gap-1 border border-gray-700 rounded w-fit mx-auto mb-24 p-1'>
 			<li class='py-2 px-8 rounded bg-gray-700 text-white'>All</li>
 			<li class='py-2 px-8 rounded hover:bg-gray-700 hover:text-white'>Brochure</li>
 			<li class='py-2 px-8 rounded hover:bg-gray-700 hover:text-white'>Ecommerce</li>
