@@ -1,0 +1,429 @@
+<script>
+	import { onMount } from "svelte";
+	import Draggable from '../../lib/Draggable.svelte';
+
+	const API_ENDPOINT = 'https://mandrillapp.com/api/1.0/messages/send';
+	let csv, fileInput, replacementStringInput, subject, subjectReplacementStringInput, fileContent, fileCount, emailTextInput, columns, selectedNameColumn, selectedSubjectColumn, selectedEmailColumn;
+	let apiKey = import.meta.env.VITE_MANDRILL_API_KEY;
+	let progressAmount = 0;
+	let testEmail = 'branslaa@gmail.com';
+	let fromEmail = 'jack@fattallegal.com';
+	let subjectInput = 'Inquiry from Fattal Legal PLLC - {{company}}';
+	let replacementString = '{{name}}';
+	let subjectReplacementString = '{{company}}';
+	let emailText = `<div dir="ltr">Dear {{name}},<br>
+			<div><br></div>
+			<div>I am reaching out to see if you have any interest in a referral arrangement with my firm, Fattal Legal PLLC, should you have any clients that require a corporate and securities attorney. Having worked both in-house and in law firms, across corporate, securities, M&A and real estate law, my legal experience is unique.</div>
+			<div><br></div>
+			<div>
+				<div>For your consideration, <span style="color:rgb(0,0,0)">please note my law firm website, </span><b
+						style="color:rgb(0,0,0)"><a
+							href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
+							id="m_-6002395602624647452m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA18e1aa00-6eed-04f6-499c-6e8a43341e24"
+							target="_blank"
+							data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&source=gmail&ust=1710513595717000&usg=AOvVaw2Y4gtEmBqaT3_UW0XzZgZt">fattallegal.com</a></b><span
+						style="color:rgb(0,0,0)">, as well as my latest </span><a
+						href="https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p=eyJzIjoid253RXhMeTFNSElwSk9FeHNrVERFZE9ZU1o0IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY19lZTRmOTRkZjRjNzg0ODMyYWUzMDRmNGQ1NzM3NzJlMC5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjdkODEzNmU4ZmU1MTJjMTlmMmZmNGMyMWE0ZGYzOGIzYTM4NDY5MzVcIl19In0"
+						id="m_-6002395602624647452m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA02b9e305-6459-2950-88e0-5213136a50e6"
+						target="_blank"
+						data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p%3DeyJzIjoid253RXhMeTFNSElwSk9FeHNrVERFZE9ZU1o0IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY19lZTRmOTRkZjRjNzg0ODMyYWUzMDRmNGQ1NzM3NzJlMC5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjdkODEzNmU4ZmU1MTJjMTlmMmZmNGMyMWE0ZGYzOGIzYTM4NDY5MzVcIl19In0&source=gmail&ust=1710513595717000&usg=AOvVaw0dC5QD7Qp6y_l05_F1p3Ia"
+						jslog="32272; 1:WyIjdGhyZWFkLWY6MTc5MzIxMzMzOTUyODczNDIwMnxtc2ctZjoxNzkzNTEyOTAyMjg5MjU4OTkxIl0.; 4:WyIjbXNnLWY6MTc5MzUxMjkwMjI4OTI1ODk5MSJd">Resume</a><span
+						style="color:rgb(0,0,0)"> and an </span><a
+						href="https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p=eyJzIjoiV1p5M1V5TURLZVRmQ013THl1Y1ZnTDd6OWdJIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY183MDRlYTg0NGQ0OWQ0ZmE4YjEzM2I2OWNiNDUzYTA2Yy5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjE2YmVhY2RhOTVmNDE3YzM4YzY5ZTgyMmE5MjFlMTIyMDdjODBkNjhcIl19In0"
+						id="m_-6002395602624647452m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA2ba62f56-7990-1b77-bcc9-51ef4c62f79a"
+						target="_blank"
+						data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p%3DeyJzIjoiV1p5M1V5TURLZVRmQ013THl1Y1ZnTDd6OWdJIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY183MDRlYTg0NGQ0OWQ0ZmE4YjEzM2I2OWNiNDUzYTA2Yy5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjE2YmVhY2RhOTVmNDE3YzM4YzY5ZTgyMmE5MjFlMTIyMDdjODBkNjhcIl19In0&source=gmail&ust=1710513595717000&usg=AOvVaw1Cq2ms3TRqGWCSI6yg1_Hx"
+						jslog="32272; 1:WyIjdGhyZWFkLWY6MTc5MzIxMzMzOTUyODczNDIwMnxtc2ctZjoxNzkzNTEyOTAyMjg5MjU4OTkxIl0.; 4:WyIjbXNnLWY6MTc5MzUxMjkwMjI4OTI1ODk5MSJd">Information
+						Sheet</a><span style="color:rgb(0,0,0)"> </span><i style="color:rgb(0,0,0)">(Click to view).</i>
+				</div>
+			</div>
+			<div><br></div>
+			<div>Please let me know if you'd like to schedule a call to discuss. </div>
+			<div><br></div>
+			<div>Thanks & regards,</div>
+			<div><br></div>
+			<div>Jack</div>
+			<div><br></div>
+			<div><br></div>
+			<div>
+				<div style="color:rgb(0,0,0)"><br>
+					<div><br>
+						<div><br><img
+								src="https://ci3.googleusercontent.com/meips/ADKq_NbKnOT2CtyM4WaOPK1jKFH8f3ZriVXDMdNwBeiIDdw4-46nJvJ7PcX6Esd_TT6Db655EJ9VrL8gtX3uR6fLcsh0cetbBhbBa9IZg4PICGkRQyUgaEFbYsQJxAh4Ug=s0-d-e1-ft#https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
+								alt="Logo dark green.png" width="167" height="72" style="margin-right:0px" class="CToWUd"
+								data-bit="iit"><br></div>
+						<div><b>
+								<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ.</font>
+							</b></div>
+						<div><b>
+								<font face="tahoma, sans-serif" color="#000000">Attorney at Law</font>
+							</b></div>
+						<div><b>
+								<font face="tahoma, sans-serif" color="#000000"><br></font>
+							</b></div>
+						<div>
+							<font face="tahoma, sans-serif" color="#000000">30 Wall Street, 8th Floor, New York, NY 
+								10005<br></font>
+							<div>
+								<font face="tahoma, sans-serif" color="#000000">Direct: +1 (917) 480-1169</font>
+							</div>
+							<div>
+								<font face="tahoma, sans-serif" color="#000000"><a href="mailto:jack@fattallegal.com"
+										target="_blank">jack@fattallegal.com</a>  <span
+										style="font-size:13px">|</span>  <a
+										href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
+										target="_blank"
+										data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&source=gmail&ust=1710513595718000&usg=AOvVaw3X3NdkYT618_TZpmfXlHg8">www.<wbr>fattallegal.com</a>
+								</font>
+							</div>
+							<div>
+								<font face="tahoma, sans-serif" color="#000000"><br></font>
+							</div>
+							<div>
+								<table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;width:996px">
+									<tbody>
+										<tr>
+											<td align="left" style="vertical-align:top">
+												<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
+													<tbody>
+														<tr style="font-size:13px">
+															<td align="left" style="vertical-align:top">
+																<font face="tahoma, sans-serif" color="#000000"> <br>
+																</font>
+															</td>
+														</tr>
+														<tr>
+															<td align="left" style="vertical-align:top">
+																<table cellpadding="0" cellspacing="0" border="0"
+																	style="font-size:13px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
+																	<tbody>
+																		<tr style="font-size:13px">
+																			<td>
+																				<font face="tahoma, sans-serif" color="#000000">
+																					<span
+																						style="text-decoration-line:underline">Privileged
+																						Information</span>: This message,
+																					together with any attachments, is intended
+																					only for the use of the individual or entity
+																					to which it is addressed and may contain
+																					information that is legally privileged,
+																					confidential and/or exempt from disclosure.
+																					If you are not the intended recipient, you
+																					are hereby notified that any use,
+																					dissemination, distribution, or copying of
+																					this message, or any attachment, is strictly
+																					prohibited. If you have received this
+																					message in error, please delete this
+																					message, along with any attachments, from
+																					your computer. Thank you. </font>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="color:rgb(0,0,0)">
+					<div>
+						<div>
+							<table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;width:996px">
+								<tbody>
+									<tr>
+										<td align="left" style="vertical-align:top">
+											<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
+												<tbody></tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>`;
+	let emailOutput = emailText;
+	
+	onMount(() => {
+		emailTextInput = document.getElementById("email-text");
+		fileInput = document.getElementById("file-input");
+		replacementStringInput = document.getElementById("replacement-string");
+		subjectReplacementStringInput = document.getElementById("subject-replacement-string");
+
+		emailTextInput.addEventListener('input', (e) => {
+			output_csv(e);
+		});
+		
+		replacementStringInput.addEventListener('input', () => {
+			output_csv();
+		});
+		
+		subjectReplacementStringInput.addEventListener('input', () => {
+			setSubject();
+		});
+
+		fileInput.addEventListener('change', (e) => {
+			const selectedFile = e.target.files[0];
+			const reader = new FileReader();
+			reader.onload = function (event) {
+				fileContent = event.target.result;
+				output_csv();
+				setSubject();
+				setSelectVariables();
+			};
+			reader.readAsText(selectedFile);
+		});
+	});
+
+	function setSubject() {
+		subject = subjectInput.replace(subjectReplacementString, csv[0][selectedSubjectColumn]);
+	}
+
+	function setSelectVariables() {
+		if(columns) {
+			if(columns.includes('Email')) {
+				selectedEmailColumn = "Email";
+			} else if(columns.includes('email')) {
+				selectedEmailColumn = "email";
+			} else if(columns.includes('Email Address')) {
+				selectedEmailColumn = "Email Address";
+			} else if(columns.includes('email address')) {
+				selectedEmailColumn = "email address";
+			} else if(columns.includes('email_address')) {
+				selectedEmailColumn = "email_address";
+			}
+
+			if(columns.includes('First Name')) {
+				selectedNameColumn = 'First Name';
+			} else if(columns.includes('first name')) {
+				selectedNameColumn = 'first name';
+			} else if(columns.includes('first_name')) {
+				selectedNameColumn = 'first_name';
+			} else if(columns.includes('first')) {
+				selectedNameColumn = 'first';
+			} else if(columns.includes('name')) {
+				selectedNameColumn = 'name';
+			}
+
+			if(columns.includes('Company')) {
+				selectedSubjectColumn = 'Company';
+			} else if(columns.includes('company')) {
+				selectedSubjectColumn = 'company';
+			} else if(columns.includes('Company Name')) {
+				selectedSubjectColumn = 'Company Name';
+			} else if(columns.includes('company name')) {
+				selectedSubjectColumn = 'company name';
+			} else if(columns.includes('company_name')) {
+				selectedSubjectColumn = 'company_name';
+			}
+		}
+	}
+
+	/*
+	* @param {string} quoteChar A character to use as the encapsulating character.
+	* @param {string} delimiter A character to use between columns.
+	* @returns {object[]} An array of JavaScript objects containing headers as keys
+	* and row entries as values.
+	*/
+	function csvToJson(text, headers, quoteChar = '"', delimiter = ',') {
+		const regex = new RegExp(`\\s*(${quoteChar})?(.*?)\\1\\s*(?:${delimiter}|$)`, 'gs');
+
+		const match = line => [...line.matchAll(regex)]
+			.map(m => m[2])  // we only want the second capture group
+			.slice(0, -1);   // cut off blank match at the end
+
+		const lines = text.split('\n');
+		const heads = headers ?? match(lines.shift());
+		columns = heads;
+		return lines.map(line => {
+			return match(line).reduce((acc, cur, i) => {
+			// Attempt to parse as a number; replace blank matches with `null`
+			const val = cur.length <= 0 ? null : Number(cur) || cur;
+			const key = heads[i] ?? `extra_${i}`;
+			return { ...acc, [key]: val };
+			}, {});
+		});
+	}
+
+	function output_csv(e = '') {
+		if(fileContent && fileContent.length > 0) {
+			csv = csvToJson(fileContent);
+			if(csv) {
+				fileCount = csv.length;
+	
+				if((emailText && emailText.length > 0)) {
+					emailOutput = emailText.replace(replacementString, csv[0][selectedNameColumn]);
+				} 
+			}
+		} else {
+			if(e) {
+				emailOutput = e.target.value;
+			}
+		}
+	}
+
+	const sendTransactionalEmail = async (recipient) => {
+		const payload = {
+			key: apiKey,
+			message: {
+				from_email: fromEmail,
+				to: [{ email: recipient }],
+				subject: subject,
+				html: emailOutput
+			}
+		};
+
+		try {
+			const response = await fetch(API_ENDPOINT, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(payload),
+			});
+
+			const data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	};
+
+
+	function triggerSendEmails() {
+		if(fileCount > 0) {
+			let count = 0;
+			csv.forEach(element => {
+				sendTransactionalEmail(element[selectedEmailColumn]);
+				count++;
+				progressAmount = count / fileCount;
+			});
+		}
+	}
+	
+	function triggerSendTestEmail() {
+		sendTransactionalEmail(testEmail);
+	}
+</script>
+
+<div class="py-16 max-w-4xl mx-auto">
+	<h1 class='text-center mb-8 text-4xl font-bold'>Voice of Third</h1>
+	<form action='' method='post' class='grid grid-cols-2 gap-4  mb-8'>
+		<label for='api-key'>API Key
+			<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
+		</label>
+
+		<div>
+			<label for='file-input'>Upload CSV
+				<input id='file-input' type='file' accept="csv" name='file-input' class='block w-full p-2 border-2 border-dashed border-yellow-500'>
+				<input id='file-contents' type='hidden' name='file-contents' bind:value={fileContent}>
+			</label>
+			<p>File {#if fileCount}has {fileCount} row{#if fileCount > 1}s{/if}{:else}does not exist{/if}.</p>
+		</div>
+		
+		<label for='from-email'>From Email
+			<input id='from-email' type='email' name='from-email' bind:value={fromEmail} class='block w-full border-2 border-pink-500 bg-pink-100 p-2'>
+		</label>
+
+		<label for='test-email'>Test Email
+			<input id='test-email' type='email' name='test-email' bind:value={testEmail} class='block w-full border-2 border-emerald-500 bg-emerald-100 p-2'>
+		</label>
+		
+		<div>
+			<label for='email-column-select'>Email Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
+				<select id='email-column-select' name='email-column-select' bind:value={selectedEmailColumn} class='block w-full border-2 border-pink-500 bg-pink-100 p-2'>
+					{#if columns}
+						<option>Select Email Column</option>
+						{#each columns as column}
+							{#if column}
+								<option value={column}>
+									{column}
+								</option>
+							{/if}
+						{/each}
+					{/if}
+				</select>
+			</label>
+			<p><strong>Recipient:</strong> {#if selectedEmailColumn}{csv[0][selectedEmailColumn]}{/if}</p>
+		</div>
+
+		<label for='subject'>Subject
+			<input id='subject' type='text' name='subject' bind:value={subjectInput} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+		</label>
+		
+		<div>
+			<label for='subject-column-select'>Subject Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
+				<select id='subject-column-select' name='subject-column-select' bind:value={selectedSubjectColumn} on:change={() => setSubject()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+					{#if columns}
+						<option>Select Subject Column</option>
+						{#each columns as column}
+							{#if column}
+								<option value={column}>
+									{column}
+								</option>
+							{/if}
+						{/each}
+					{/if}
+				</select>
+			</label>
+			<p><strong>Subject:</strong>{#if subject}&nbsp;{subject}{/if}</p>
+		</div>
+
+		<div>
+			<label for='name-column-select'>Name Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
+				<select id='name-column-select' name='name-column-select' bind:value={selectedNameColumn} on:change={() => output_csv()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+					{#if columns}
+						<option>Select a Column</option>
+						{#each columns as column}
+							{#if column}
+								<option value={column}>
+									{column}
+								</option>
+							{/if}
+						{/each}
+					{/if}
+				</select>
+			</label>
+		</div>
+
+		<label for='subject-replacement-string'>Subject Replacement String
+			<input id='subject-replacement-string' type='text' name='subject-replacement-string' bind:value={subjectReplacementString} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+		</label>
+
+		<label for='replacement-string'>Text Replacement String
+			<input id='replacement-string' type='text' name='replacement-string' bind:value={replacementString} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+		</label>
+
+		<label for='email-text' class='col-span-2'>Enter Text or HTML
+			<textarea id='email-text' name='email-text' bind:value={emailText} class='block w-full border-2 border-sky-500 bg-sky-100 p-2' rows='10'></textarea>
+		</label>
+	</form>
+
+	<progress id='sending-progress' value={progressAmount} max='100' class='w-full'></progress>
+	<div class='grid max-w-md grid-cols-2 gap-4 mx-auto mt-8'>
+		<button id='send-emails' class='bg-red-700 p-4 text-white hover:bg-red-500' on:click={triggerSendEmails}>Send {#if fileCount > 0}{fileCount}{:else}0{/if} Emails</button>
+		<button id='send-test' class='bg-green-700 p-4 text-white hover:bg-green-500'on:click={triggerSendTestEmail}>Send Test</button>
+	</div>
+
+	{#if emailOutput}
+		<Draggable>
+			<div class='bg-white p-2'>
+				<div id="csv-output">
+					{@html emailOutput}
+				</div>
+			</div>
+		</Draggable>
+	{/if}
+</div>
+
+<style>
+</style>
