@@ -6,6 +6,7 @@
 	let csv, fileInput, replacementStringInput, subject, subjectReplacementStringInput, fileContent, fileCount, emailTextInput, columns, selectedNameColumn, selectedSubjectColumn, selectedEmailColumn;
 	let apiKey = import.meta.env.VITE_MANDRILL_API_KEY;
 	let progressAmount = 0;
+	let count = 0;
 	let testEmail = 'branslaa@gmail.com';
 	let fromEmail = 'jack@fattallegal.com';
 	let subjectInput = 'Inquiry from Fattal Legal PLLC - {{company}}';
@@ -152,6 +153,8 @@
 			</div>
 		</div>`;
 	let emailOutput = emailText;
+
+	let start, end;
 	
 	onMount(() => {
 		emailTextInput = document.getElementById("email-text");
@@ -160,11 +163,11 @@
 		subjectReplacementStringInput = document.getElementById("subject-replacement-string");
 
 		emailTextInput.addEventListener('input', (e) => {
-			output_csv(e);
+			loadCSV(e);
 		});
 		
 		replacementStringInput.addEventListener('input', () => {
-			output_csv();
+			loadCSV();
 		});
 		
 		subjectReplacementStringInput.addEventListener('input', () => {
@@ -176,13 +179,33 @@
 			const reader = new FileReader();
 			reader.onload = function (event) {
 				fileContent = event.target.result;
-				output_csv();
+				loadCSV();
 				setSubject();
 				setSelectVariables();
 			};
 			reader.readAsText(selectedFile);
 		});
 	});
+
+	function loadCSV(e = '') {
+		if(fileContent && fileContent.length > 0) {
+			csv = csvToJson(fileContent);
+			if(csv) {
+				fileCount = csv.length;
+				updateEmailOutput()
+			}
+		} else {
+			if(e) {
+				emailOutput = e.target.value;
+			}
+		}
+	}
+
+	function updateEmailOutput() {
+		if((emailText && emailText.length > 0)) {
+			emailOutput = emailText.replace(replacementString, csv[0][selectedNameColumn]);
+		} 
+	}
 
 	function setSubject() {
 		subject = subjectInput.replace(subjectReplacementString, csv[0][selectedSubjectColumn]);
@@ -226,6 +249,9 @@
 				selectedSubjectColumn = 'company_name';
 			}
 		}
+
+		updateEmailOutput();
+		setSubject();
 	}
 
 	/*
@@ -254,20 +280,12 @@
 		});
 	}
 
-	function output_csv(e = '') {
-		if(fileContent && fileContent.length > 0) {
-			csv = csvToJson(fileContent);
-			if(csv) {
-				fileCount = csv.length;
-	
-				if((emailText && emailText.length > 0)) {
-					emailOutput = emailText.replace(replacementString, csv[0][selectedNameColumn]);
-				} 
-			}
-		} else {
-			if(e) {
-				emailOutput = e.target.value;
-			}
+	function incrementProgress() {
+		count++;
+		progressAmount = (count / fileCount) * 100;
+		if(progressAmount == 100) {
+			end = performance.now();
+			console.log(`It took ${end - start} ms.`);
 		}
 	}
 
@@ -293,6 +311,7 @@
 
 			const data = await response.json();
 			console.log(data);
+			incrementProgress();
 		} catch (error) {
 			console.error('Error:', error);
 		}
@@ -301,11 +320,15 @@
 
 	function triggerSendEmails() {
 		if(fileCount > 0) {
-			let count = 0;
+			count = 0;
+			progressAmount = 0;
+			start = performance.now();
 			csv.forEach(element => {
-				sendTransactionalEmail(element[selectedEmailColumn]);
-				count++;
-				progressAmount = count / fileCount;
+				if(element[selectedEmailColumn]) {
+					sendTransactionalEmail(element[selectedEmailColumn]);
+				} else {
+					incrementProgress();
+				}
 			});
 		}
 	}
@@ -317,7 +340,7 @@
 
 <div class="py-16 max-w-4xl mx-auto">
 	<h1 class='text-center mb-8 text-4xl font-bold'>Voice of Third</h1>
-	<form action='' method='post' class='grid grid-cols-2 gap-4  mb-8'>
+	<form action='' method='post' class='grid grid-cols-2 gap-4 mb-8'>
 		<label for='api-key'>API Key
 			<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
 		</label>
@@ -380,7 +403,7 @@
 
 		<div>
 			<label for='name-column-select'>Name Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
-				<select id='name-column-select' name='name-column-select' bind:value={selectedNameColumn} on:change={() => output_csv()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+				<select id='name-column-select' name='name-column-select' bind:value={selectedNameColumn} on:change={() => loadCSV()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
 					{#if columns}
 						<option>Select a Column</option>
 						{#each columns as column}
@@ -408,7 +431,14 @@
 		</label>
 	</form>
 
-	<progress id='sending-progress' value={progressAmount} max='100' class='w-full'></progress>
+	{#if progressAmount != 0 && progressAmount != 100}
+		<progress id='sending-progress' value={progressAmount} max='100' class='w-full'>
+			Sending {progressAmount}%
+		</progress>
+	{/if}
+	{#if progressAmount == 100}
+		<h2 class="text-3xl text-center text-emerald-700 font-bold">Complete!!</h2>
+	{/if}
 	<div class='grid max-w-md grid-cols-2 gap-4 mx-auto mt-8'>
 		<button id='send-emails' class='bg-red-700 p-4 text-white hover:bg-red-500' on:click={triggerSendEmails}>Send {#if fileCount > 0}{fileCount}{:else}0{/if} Emails</button>
 		<button id='send-test' class='bg-green-700 p-4 text-white hover:bg-green-500'on:click={triggerSendTestEmail}>Send Test</button>
