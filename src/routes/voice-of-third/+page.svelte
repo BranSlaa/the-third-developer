@@ -319,7 +319,7 @@
 
 
 	function triggerSendEmails() {
-		if(fileCount > 0) {
+		if(fileCount > 0 && confirm("Please Confirm Send")) {
 			count = 0;
 			progressAmount = 0;
 			start = performance.now();
