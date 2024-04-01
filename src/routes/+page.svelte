@@ -9,10 +9,10 @@
 				</div>
 				<span class="block text-5xl leading-none font-header font-bold text-blue-800">the Third Developer</span>
 			</h1>
-			<p class="text-blue-900 mt-4 max-w-2xl mx-auto">
-				The first developer focuses on the problem.<br>
-				The second developer focuses on the solution.<br/>
-				I look through the surface to peer into the true meaning.<br>
+			<p class="text-blue-900 mt-4 max-w-lg mx-auto">
+				The first developer focuses on the problem.<br class="hidden md:block">
+				The second developer focuses on the solution.<br class="hidden md:block">
+				I look through the surface to peer into the true meaning.<br class="hidden md:block">
 				I am the Third Developer, finding answers that best fit your needs.
 			</p>
 		</div>
@@ -34,12 +34,12 @@
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
 			<h2 class="text-5xl text-blue-800 font-bold text-center mb-8">Portfolio</h2>
-			<div class="grid md:grid-cols-3 gap-8 grid">
-				<a href='https://runkeeper.com/cms/'>
+			<div class="flex justify-center gap-8">
+				<a href='https://runkeeper.com/cms/' class='block md:w-1/3'>
 					<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src="/asics-runkeeper.webp" alt="ASICS Runkeeper" />
 					<caption class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>ASICS Runkeeper</caption>
 				</a>
-				<a href='https://dbinex.ca/'>
+				<a href='https://dbinex.ca/' class='block md:w-1/3'>
 					<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src="/dbinex.webp" alt="DBINEX" />
 					<caption class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>DBINEX</caption>
 				</a>
