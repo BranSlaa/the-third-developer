@@ -52,11 +52,11 @@
 	<section id="hero" class="container mx-auto flex justify-center items-center text-center relative z-10">
 		<div class="max-w-4xl">
 			<h1>
-				<span class="block text-7xl leading-none font-header font-bold text-blue-800">Brandon Slaa</span>
+				<span class="block text-5xl md:text-7xl leading-none font-header font-bold text-blue-800">Brandon Slaa</span>
 				<div class="relative h-4">
 					<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl leading-none font-cursive text-yellow-500 drop-shadow-lg z-10">is</span>
 				</div>
-				<span class="block text-5xl leading-none font-header font-bold text-blue-800">the Third Developer</span>
+				<span class="block text-4xl md:text-5xl leading-none font-header font-bold text-blue-800">the Third Developer</span>
 			</h1>
 			<p class="text-blue-900 mt-4 max-w-lg mx-auto">
 				The first developer focuses on the problem.<br class="hidden md:block">
@@ -96,9 +96,9 @@
 	</div>
 	<section id="contact" class="container mx-auto pt-16 pb-8 max-w-5xl">
 		<div class="flex gap-8 justify-center items-center">
-			<div class="w-1/2 text-center">
+			<div class="max-w-1/2 text-center">
 				<h2 class="text-blue-900 font-header text-4xl mb-4">I'd love to hear from you</h2>
-				<a href="mailto:branslaa@gmail.com" class="text-blue-900 font-bold text-xl hover:border-b-4  hover:border-yellow-500">branslaa@gmail.com</a>
+				<a href="mailto:branslaa@gmail.com" class="text-blue-900 text-center font-bold text-xl hover:border-b-4  hover:border-yellow-500">branslaa@gmail.com</a>
 			</div>
 		</div>
 	</section>
