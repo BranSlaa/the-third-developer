@@ -54,7 +54,7 @@
 			<h1>
 				<span class="block text-5xl md:text-7xl leading-none font-header font-bold text-blue-800">Brandon Slaa</span>
 				<div class="relative h-4">
-					<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl leading-none font-cursive text-yellow-500 drop-shadow-lg z-10">is</span>
+					<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl leading-none font-cursive text-yellow-500 drop-shadow-yeller z-10">is</span>
 				</div>
 				<span class="block text-4xl md:text-5xl leading-none font-header font-bold text-blue-800">the Third Developer</span>
 			</h1>
