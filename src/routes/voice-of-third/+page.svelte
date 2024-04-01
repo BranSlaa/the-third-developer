@@ -5,6 +5,7 @@
 	const API_ENDPOINT = 'https://mandrillapp.com/api/1.0/messages/send';
 	let csv, password, fileInput, replacementStringInput, subject, subjectReplacementStringInput, fileContent, fileCount, emailTextInput, columns, selectedNameColumn, selectedSubjectColumn, selectedEmailColumn;
 	let apiKey = import.meta.env.VITE_MANDRILL_API_KEY;
+	let pw = import.meta.env.VITE_VOICE_PASSWORD;
 	let progressAmount = 0;
 	let count = 0;
 	let testEmail = 'branslaa@gmail.com';
@@ -343,7 +344,7 @@
 	<label for='email-text' class='block col-span-2 mb-4'>Password
 		<input id='password' type='password' bind:value={password} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'/>
 	</label>
-	{#if password == import.meta.env.VITE_VOICE_PASSWORD}
+	{#if password == pw}
 		<form action='' method='post' class='grid grid-cols-2 gap-4 mb-8'>
 			<label for='api-key'>API Key
 				<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
