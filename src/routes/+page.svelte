@@ -1,3 +1,52 @@
+<script>
+	let portfolio = [
+		{
+			name: "ASICS Runkeeper",
+			url: "https://runkeeper.com/cms/",
+			imageUrl: "/asics-runkeeper.webp"
+		},
+		{
+			name: "DBINEX",
+			url: "https://dbinex.ca",
+			imageUrl: "/dbinex.webp"
+		},
+		{
+			name: "London Research and Care Partners",
+			url: "https://londonresearchandcarepartners.com/",
+			imageUrl: "/health-sciences.webp"
+		},
+		{
+			name: "Covent Garden Market",
+			url: "https://coventmarket.com/",
+			imageUrl: "/cgm.webp"
+		},
+		{
+			name: "Running USA",
+			url: "https://runningusa.org/",
+			imageUrl: "/runningusa.webp"
+		},
+		{
+			name: "Cowbell Brewery",
+			url: "https://cowbellbrewing.com/",
+			imageUrl: "/cowbell.webp"
+		},
+		{
+			name: "Elemex<sup>®</sup>",
+			url: "https://elemex.ca/",
+			imageUrl: "/elemex.webp"
+		},
+		{
+			name: "KoruK9<sup>®</sup>",
+			url: "https://www.koruk9.com/",
+			imageUrl: "/koruk9.webp"
+		},
+		{
+			name: "Brain Tumour Foundation of Canada",
+			url: "https://www.braintumour.ca/",
+			imageUrl: "/btf.webp"
+		},
+	];
+</script>
 <div class="relative  hero-pattern pt-16 px-8 overflow-hidden bg-blue-200">
 	<!-- <div class="bg-gradient-to-b from-blue-950 to-blue-800 absolute -z-10 w-full h-full top-0 left-0" /> -->
 	<section id="hero" class="container mx-auto flex justify-center items-center text-center relative z-10">
@@ -34,15 +83,13 @@
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
 			<h2 class="text-5xl text-blue-800 font-bold text-center mb-8">Portfolio</h2>
-			<div class="grid md:flex justify-center gap-8">
-				<a href='https://runkeeper.com/cms/' class='block md:w-1/3'>
-					<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src="/asics-runkeeper.webp" alt="ASICS Runkeeper" />
-					<div class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>ASICS Runkeeper</div>
-				</a>
-				<a href='https://dbinex.ca/' class='block md:w-1/3'>
-					<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src="/dbinex.webp" alt="DBINEX" />
-					<div class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>DBINEX</div>
-				</a>
+			<div class="grid md:grid-cols-3 flex-wrap justify-center gap-8">
+				{#each portfolio as piece}
+					<a href={piece.url} class='block'>
+						<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src={piece?.imageUrl} alt={piece?.name} />
+						<div class='block text-blue-900 font-header font-bold mt-4 text-xl w-full text-center'>{@html piece?.name}</div>
+					</a>
+				{/each}
 			</div>
 		</section>
 	</div>
