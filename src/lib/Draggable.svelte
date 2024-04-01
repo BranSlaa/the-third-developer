@@ -1,6 +1,6 @@
 <script>
 	export let left = 33;
-	export let top = 50;
+	export let top = 33;
 	
 	let moving = false;
 	
@@ -29,14 +29,14 @@
 		border: solid 1px gray;
 		position: absolute;
 		width: 333px;
-		height: 80vh;
+		height: 20vh;
 		overflow: auto;
 		resize: both;
 	}
 </style>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<section on:mousedown={onMouseDown} style="left: {left}px; top: {top}px;" class="draggable">
+<section on:mousedown={onMouseDown} style="left: {left}px; top: {top}px;" class="draggable bg-white p-2">
 	<slot></slot>
 </section>
 

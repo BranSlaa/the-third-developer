@@ -3,7 +3,7 @@
 	import Draggable from '../../lib/Draggable.svelte';
 
 	const API_ENDPOINT = 'https://mandrillapp.com/api/1.0/messages/send';
-	let csv, fileInput, replacementStringInput, subject, subjectReplacementStringInput, fileContent, fileCount, emailTextInput, columns, selectedNameColumn, selectedSubjectColumn, selectedEmailColumn;
+	let csv, password, fileInput, replacementStringInput, subject, subjectReplacementStringInput, fileContent, fileCount, emailTextInput, columns, selectedNameColumn, selectedSubjectColumn, selectedEmailColumn;
 	let apiKey = import.meta.env.VITE_MANDRILL_API_KEY;
 	let progressAmount = 0;
 	let count = 0;
@@ -340,118 +340,121 @@
 
 <div class="py-16 max-w-4xl mx-auto">
 	<h1 class='text-center mb-8 text-4xl font-bold'>Voice of Third</h1>
-	<form action='' method='post' class='grid grid-cols-2 gap-4 mb-8'>
-		<label for='api-key'>API Key
-			<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
-		</label>
-
-		<div>
-			<label for='file-input'>Upload CSV
-				<input id='file-input' type='file' accept="csv" name='file-input' class='block w-full p-2 border-2 border-dashed border-yellow-500'>
-				<input id='file-contents' type='hidden' name='file-contents' bind:value={fileContent}>
+	<label for='email-text' class='block col-span-2 mb-4'>Password
+		<input id='password' type='password' bind:value={password} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'/>
+	</label>
+	{#if password == import.meta.env.VITE_VOICE_PASSWORD}
+		<form action='' method='post' class='grid grid-cols-2 gap-4 mb-8'>
+			<label for='api-key'>API Key
+				<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
 			</label>
-			<p>File {#if fileCount}has {fileCount} row{#if fileCount > 1}s{/if}{:else}does not exist{/if}.</p>
-		</div>
-		
-		<label for='from-email'>From Email
-			<input id='from-email' type='email' name='from-email' bind:value={fromEmail} class='block w-full border-2 border-pink-500 bg-pink-100 p-2'>
-		</label>
 
-		<label for='test-email'>Test Email
-			<input id='test-email' type='email' name='test-email' bind:value={testEmail} class='block w-full border-2 border-emerald-500 bg-emerald-100 p-2'>
-		</label>
-		
-		<div>
-			<label for='email-column-select'>Email Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
-				<select id='email-column-select' name='email-column-select' bind:value={selectedEmailColumn} class='block w-full border-2 border-pink-500 bg-pink-100 p-2'>
-					{#if columns}
-						<option>Select Email Column</option>
-						{#each columns as column}
-							{#if column}
-								<option value={column}>
-									{column}
-								</option>
-							{/if}
-						{/each}
-					{/if}
-				</select>
+			<div>
+				<label for='file-input'>Upload CSV
+					<input id='file-input' type='file' accept="csv" name='file-input' class='block w-full p-2 border-2 border-dashed border-yellow-500'>
+					<input id='file-contents' type='hidden' name='file-contents' bind:value={fileContent}>
+				</label>
+				<p>File {#if fileCount}has {fileCount} row{#if fileCount > 1}s{/if}{:else}does not exist{/if}.</p>
+			</div>
+			
+			<label for='from-email'>From Email
+				<input id='from-email' type='email' name='from-email' bind:value={fromEmail} class='block w-full border-2 border-pink-500 bg-pink-100 p-2'>
 			</label>
-			<p><strong>Recipient:</strong> {#if selectedEmailColumn}{csv[0][selectedEmailColumn]}{/if}</p>
-		</div>
 
-		<label for='subject'>Subject
-			<input id='subject' type='text' name='subject' bind:value={subjectInput} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
-		</label>
-		
-		<div>
-			<label for='subject-column-select'>Subject Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
-				<select id='subject-column-select' name='subject-column-select' bind:value={selectedSubjectColumn} on:change={() => setSubject()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
-					{#if columns}
-						<option>Select Subject Column</option>
-						{#each columns as column}
-							{#if column}
-								<option value={column}>
-									{column}
-								</option>
-							{/if}
-						{/each}
-					{/if}
-				</select>
+			<label for='test-email'>Test Email
+				<input id='test-email' type='email' name='test-email' bind:value={testEmail} class='block w-full border-2 border-emerald-500 bg-emerald-100 p-2'>
 			</label>
-			<p><strong>Subject:</strong>{#if subject}&nbsp;{subject}{/if}</p>
-		</div>
+			
+			<div>
+				<label for='email-column-select'>Email Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
+					<select id='email-column-select' name='email-column-select' bind:value={selectedEmailColumn} class='block w-full border-2 border-pink-500 bg-pink-100 p-2'>
+						{#if columns}
+							<option>Select Email Column</option>
+							{#each columns as column}
+								{#if column}
+									<option value={column}>
+										{column}
+									</option>
+								{/if}
+							{/each}
+						{/if}
+					</select>
+				</label>
+				<p><strong>Recipient:</strong> {#if selectedEmailColumn}{csv[0][selectedEmailColumn]}{/if}</p>
+			</div>
 
-		<div>
-			<label for='name-column-select'>Name Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
-				<select id='name-column-select' name='name-column-select' bind:value={selectedNameColumn} on:change={() => loadCSV()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
-					{#if columns}
-						<option>Select a Column</option>
-						{#each columns as column}
-							{#if column}
-								<option value={column}>
-									{column}
-								</option>
-							{/if}
-						{/each}
-					{/if}
-				</select>
+			<label for='subject'>Subject
+				<input id='subject' type='text' name='subject' bind:value={subjectInput} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
 			</label>
+			
+			<div>
+				<label for='subject-column-select'>Subject Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
+					<select id='subject-column-select' name='subject-column-select' bind:value={selectedSubjectColumn} on:change={() => setSubject()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+						{#if columns}
+							<option>Select Subject Column</option>
+							{#each columns as column}
+								{#if column}
+									<option value={column}>
+										{column}
+									</option>
+								{/if}
+							{/each}
+						{/if}
+					</select>
+				</label>
+				<p><strong>Subject:</strong>{#if subject}&nbsp;{subject}{/if}</p>
+			</div>
+
+			<div>
+				<label for='name-column-select'>Name Replacement Column{#if !columns}&nbsp;-&nbsp;Please upload csv.{/if}
+					<select id='name-column-select' name='name-column-select' bind:value={selectedNameColumn} on:change={() => loadCSV()} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+						{#if columns}
+							<option>Select a Column</option>
+							{#each columns as column}
+								{#if column}
+									<option value={column}>
+										{column}
+									</option>
+								{/if}
+							{/each}
+						{/if}
+					</select>
+				</label>
+			</div>
+
+			<label for='subject-replacement-string'>Subject Replacement String
+				<input id='subject-replacement-string' type='text' name='subject-replacement-string' bind:value={subjectReplacementString} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+			</label>
+
+			<label for='replacement-string'>Text Replacement String
+				<input id='replacement-string' type='text' name='replacement-string' bind:value={replacementString} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
+			</label>
+
+			<label for='email-text' class='col-span-2'>Enter Text or HTML
+				<textarea id='email-text' name='email-text' bind:value={emailText} class='block w-full border-2 border-sky-500 bg-sky-100 p-2' rows='10'></textarea>
+			</label>
+		</form>
+
+		{#if progressAmount != 0 && progressAmount != 100}
+			<progress id='sending-progress' value={progressAmount} max='100' class='w-full'>
+				Sending {progressAmount}%
+			</progress>
+		{/if}
+		{#if progressAmount == 100}
+			<h2 class="text-3xl text-center text-emerald-700 font-bold">Complete!!</h2>
+		{/if}
+		<div class='grid max-w-md grid-cols-2 gap-4 mx-auto mt-8'>
+			<button id='send-emails' class='bg-red-700 p-4 text-white hover:bg-red-500' on:click={triggerSendEmails}>Send {#if fileCount > 0}{fileCount}{:else}0{/if} Emails</button>
+			<button id='send-test' class='bg-green-700 p-4 text-white hover:bg-green-500'on:click={triggerSendTestEmail}>Send Test</button>
 		</div>
 
-		<label for='subject-replacement-string'>Subject Replacement String
-			<input id='subject-replacement-string' type='text' name='subject-replacement-string' bind:value={subjectReplacementString} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
-		</label>
-
-		<label for='replacement-string'>Text Replacement String
-			<input id='replacement-string' type='text' name='replacement-string' bind:value={replacementString} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'>
-		</label>
-
-		<label for='email-text' class='col-span-2'>Enter Text or HTML
-			<textarea id='email-text' name='email-text' bind:value={emailText} class='block w-full border-2 border-sky-500 bg-sky-100 p-2' rows='10'></textarea>
-		</label>
-	</form>
-
-	{#if progressAmount != 0 && progressAmount != 100}
-		<progress id='sending-progress' value={progressAmount} max='100' class='w-full'>
-			Sending {progressAmount}%
-		</progress>
-	{/if}
-	{#if progressAmount == 100}
-		<h2 class="text-3xl text-center text-emerald-700 font-bold">Complete!!</h2>
-	{/if}
-	<div class='grid max-w-md grid-cols-2 gap-4 mx-auto mt-8'>
-		<button id='send-emails' class='bg-red-700 p-4 text-white hover:bg-red-500' on:click={triggerSendEmails}>Send {#if fileCount > 0}{fileCount}{:else}0{/if} Emails</button>
-		<button id='send-test' class='bg-green-700 p-4 text-white hover:bg-green-500'on:click={triggerSendTestEmail}>Send Test</button>
-	</div>
-
-	{#if emailOutput}
-		<Draggable>
-			<div class='bg-white p-2'>
+		{#if emailOutput}
+			<Draggable>
 				<div id="csv-output">
 					{@html emailOutput}
 				</div>
-			</div>
-		</Draggable>
+			</Draggable>
+		{/if}
 	{/if}
 </div>
 
