@@ -40,6 +40,11 @@
 		// 	url: "https://www.braintumour.ca/",
 		// 	imageUrl: "/btf.webp"
 		// },
+		{
+			name: "Cowbell Brewery",
+			url: "https://cowbellbrewing.com/",
+			imageUrl: "/cowbell.webp"
+		},
 	];
 </script>
 <div class="relative  hero-pattern pt-16 px-8 overflow-hidden bg-blue-200">
