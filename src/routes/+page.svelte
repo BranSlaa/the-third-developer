@@ -34,14 +34,14 @@
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
 			<h2 class="text-5xl text-blue-800 font-bold text-center mb-8">Portfolio</h2>
-			<div class="flex justify-center gap-8">
+			<div class="grid md:flex justify-center gap-8">
 				<a href='https://runkeeper.com/cms/' class='block md:w-1/3'>
 					<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src="/asics-runkeeper.webp" alt="ASICS Runkeeper" />
-					<caption class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>ASICS Runkeeper</caption>
+					<div class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>ASICS Runkeeper</div>
 				</a>
 				<a href='https://dbinex.ca/' class='block md:w-1/3'>
 					<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src="/dbinex.webp" alt="DBINEX" />
-					<caption class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>DBINEX</caption>
+					<div class='block text-blue-900 font-header font-bold mt-2 text-xl w-full text-center'>DBINEX</div>
 				</a>
 			</div>
 		</section>
