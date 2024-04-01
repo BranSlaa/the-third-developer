@@ -91,12 +91,13 @@
 					</a>
 				{/each}
 			</div>
+			<p class="text-center text-2xl mt-8 text-blue-900 font-header">and over 100 more.</p>
 		</section>
 	</div>
 	<section id="contact" class="container mx-auto pt-16 pb-8 max-w-5xl">
 		<div class="flex gap-8 justify-center items-center">
 			<div class="w-1/2 text-center">
-				<h2 class="text-blue-900 text-2xl font-medium mb-4">I'd love to hear from you</h2>
+				<h2 class="text-blue-900 font-header text-4xl mb-4">I'd love to hear from you</h2>
 				<a href="mailto:branslaa@gmail.com" class="text-blue-900 font-bold text-xl hover:border-b-4  hover:border-yellow-500">branslaa@gmail.com</a>
 			</div>
 		</div>
