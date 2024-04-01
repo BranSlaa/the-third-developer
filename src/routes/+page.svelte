@@ -80,7 +80,7 @@
 			<h2 class="text-5xl text-blue-800 font-bold text-center mb-8">Portfolio</h2>
 			<div class="grid md:grid-cols-3 gap-8">
 				{#each portfolio as piece}
-					<a href={piece.url} class='block'>
+					<a href={piece.url} target="_blank" class='block'>
 						<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src={piece?.imageUrl} alt={piece?.name} />
 						<div class='block text-blue-900 font-header font-bold mt-4 text-xl w-full text-center'>{@html piece?.name}</div>
 					</a>
