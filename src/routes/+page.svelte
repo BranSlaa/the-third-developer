@@ -1,50 +1,45 @@
 <script>
 	let portfolio = [
-		{
-			name: "ASICS Runkeeper",
-			url: "https://runkeeper.com/cms/",
-			imageUrl: "/asics-runkeeper.webp"
-		},
+		// {
+		// 	name: "ASICS Runkeeper",
+		// 	url: "https://runkeeper.com/cms/",
+		// 	imageUrl: "/asics-runkeeper.webp"
+		// },
 		{
 			name: "DBINEX",
 			url: "https://dbinex.ca",
 			imageUrl: "/dbinex.webp"
 		},
-		{
-			name: "London Research and Care Partners",
-			url: "https://londonresearchandcarepartners.com/",
-			imageUrl: "/health-sciences.webp"
-		},
-		{
-			name: "Covent Garden Market",
-			url: "https://coventmarket.com/",
-			imageUrl: "/cgm.webp"
-		},
-		{
-			name: "Running USA",
-			url: "https://runningusa.org/",
-			imageUrl: "/runningusa.webp"
-		},
-		{
-			name: "Cowbell Brewery",
-			url: "https://cowbellbrewing.com/",
-			imageUrl: "/cowbell.webp"
-		},
-		{
-			name: "Elemex<sup>®</sup>",
-			url: "https://elemex.ca/",
-			imageUrl: "/elemex.webp"
-		},
-		{
-			name: "KoruK9<sup>®</sup>",
-			url: "https://www.koruk9.com/",
-			imageUrl: "/koruk9.webp"
-		},
-		{
-			name: "Brain Tumour Foundation of Canada",
-			url: "https://www.braintumour.ca/",
-			imageUrl: "/btf.webp"
-		},
+		// {
+		// 	name: "London Research and Care Partners",
+		// 	url: "https://londonresearchandcarepartners.com/",
+		// 	imageUrl: "/health-sciences.webp"
+		// },
+		// {
+		// 	name: "Covent Garden Market",
+		// 	url: "https://coventmarket.com/",
+		// 	imageUrl: "/cgm.webp"
+		// },
+		// {
+		// 	name: "Running USA",
+		// 	url: "https://runningusa.org/",
+		// 	imageUrl: "/runningusa.webp"
+		// },
+		// {
+		// 	name: "Elemex<sup>®</sup>",
+		// 	url: "https://elemex.ca/",
+		// 	imageUrl: "/elemex.webp"
+		// },
+		// {
+		// 	name: "KoruK9<sup>®</sup>",
+		// 	url: "https://www.koruk9.com/",
+		// 	imageUrl: "/koruk9.webp"
+		// },
+		// {
+		// 	name: "Brain Tumour Foundation of Canada",
+		// 	url: "https://www.braintumour.ca/",
+		// 	imageUrl: "/btf.webp"
+		// },
 	];
 </script>
 <div class="relative  hero-pattern pt-16 px-8 overflow-hidden bg-blue-200">
@@ -83,7 +78,7 @@
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
 			<h2 class="text-5xl text-blue-800 font-bold text-center mb-8">Portfolio</h2>
-			<div class="grid md:grid-cols-3 flex-wrap justify-center gap-8">
+			<div class="grid md:grid-cols-3 gap-8">
 				{#each portfolio as piece}
 					<a href={piece.url} class='block'>
 						<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src={piece?.imageUrl} alt={piece?.name} />
