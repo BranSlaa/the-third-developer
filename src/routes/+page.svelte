@@ -1,4 +1,18 @@
 <script>
+	let statements = [
+		{
+			title: "Website Development",
+			statement: "With a wealth of experience gained from London's top agencies, I've honed my skills in website development, catering to a diverse clientele ranging from local startups to global enterprises. My approach emphasizes not only creating visually captivating websites but also ensuring they are accessible to all users and fully optimized for seamless operation on mobile devices. By prioritizing accessibility standards and employing responsive design techniques, I ensure that your website reaches a wider audience and delivers an exceptional user experience across all devices.",
+		},
+		{
+			title: "Process Automation",
+			statement: "As a Computer Programmer Analyst, I possess the expertise to simplify your operations. From basic email automation to intricate procedures, I customize systems to suit your exact requirements. This enables you to streamline processes, reduce errors, and focus on driving business growth.",
+		},
+		{
+			title: "Consultation",
+			statement: "Embarking on your journey to establish a powerful online presence can be daunting. That's where I come in. As a dedicated web development professional, I offer comprehensive consultation services tailored to meet the unique needs of your business. Whether you're a budding startup or a growing enterprise, I provide personalized guidance and strategic insights to help you navigate the complexities of website development. From defining your project goals to selecting the right technologies and refining your user experience, I'll be there every step of the way to ensure your vision becomes a reality. Let's collaborate to build a website that not only captures your brand essence but also drives tangible results for your business.",
+		},
+	];
 	let portfolio = [
 		// {
 		// 	name: "ASICS Runkeeper",
@@ -67,18 +81,12 @@
 		</div>
 	</section>
 	<div class='container mx-auto max-w-xl mt-16 flex gap-8 flex-col justify-center items-center relative z-10'>
-		<div>
-			<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2 after:content-[""] after:absolute after:bottom-0 after:left-0 after:h-4 after:w-full after:bg-yellow-500 after:-z-10'>Website Development</h2>
-			<p class="text-blue-900 text-center md:text-left">With a wealth of experience gained from London's top agencies, I've honed my skills in website development, catering to a diverse clientele ranging from local startups to global enterprises. My approach emphasizes not only creating visually captivating websites but also ensuring they are accessible to all users and fully optimized for seamless operation on mobile devices. By prioritizing accessibility standards and employing responsive design techniques, I ensure that your website reaches a wider audience and delivers an exceptional user experience across all devices.</p>
-		</div>
-		<div>
-			<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2 after:content-[""] after:absolute after:bottom-0 after:left-0 after:h-4 after:w-full after:bg-yellow-500 after:-z-10'>Process Automation</h2>
-			<p class="text-blue-900 text-center md:text-left">Utilizing cutting-edge technologies and customized solutions, I specialize in streamlining your workflows through process automation. From repetitive tasks to complex procedures, I develop automated systems tailored to your specific needs, allowing you to save time, reduce errors, and focus on what matters most - growing your business.</p>
-		</div>
-		<div>
-			<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2 after:content-[""] after:absolute after:bottom-0 after:left-0 after:h-4 after:w-full after:bg-yellow-500 after:-z-10'>Consultation</h2>
-			<p class="text-blue-900 text-center md:text-left">Embarking on your journey to establish a powerful online presence can be daunting. That's where I come in. As a dedicated web development professional, I offer comprehensive consultation services tailored to meet the unique needs of your business. Whether you're a budding startup or a growing enterprise, I provide personalized guidance and strategic insights to help you navigate the complexities of website development. From defining your project goals to selecting the right technologies and refining your user experience, I'll be there every step of the way to ensure your vision becomes a reality. Let's collaborate to build a website that not only captures your brand essence but also drives tangible results for your business.</p>
-		</div>
+		{#each statements as statement}
+			<div>
+				<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2 after:content-[""] after:absolute after:bottom-0 after:left-0 after:h-4 after:w-full after:bg-yellow-500 after:-z-10'>{statement.title}</h2>
+				<p class="text-blue-900 text-center md:text-left">{statement.statement}</p>
+			</div>
+		{/each}
 	</div>
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
@@ -87,7 +95,7 @@
 				{#each portfolio as piece}
 					<a href={piece.url} target="_blank" class='block'>
 						<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src={piece?.imageUrl} alt={piece?.name} />
-						<div class='block text-blue-900 font-header font-bold mt-4 text-xl w-full text-center'>{@html piece?.name}</div>
+						<div class='block text-blue-900 font-header font-bold mt-4 text-xl w-full text-center hover:underline'>{@html piece?.name}</div>
 					</a>
 				{/each}
 			</div>
