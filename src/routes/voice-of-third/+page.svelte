@@ -10,134 +10,165 @@
 	let pw = import.meta.env.VITE_VOICE_PASSWORD;
 	let ignoreArray = [];
 	let progressAmount = 0;
-	let count, fileCount, ignorelistFileCount = 0;
+	let count, ignored, fileCount, ignorelistFileCount = 0;
 	let testEmail = 'branslaa@gmail.com';
 	let fromEmail = 'jack@fattallegal.com';
-	let subjectInput = 'Inquiry from Fattal Legal PLLC - {{company}}';
+	// let subjectInput = 'Inquiry from Fattal Legal PLLC - {{company}}';
+	let subjectInput = 'Follow-up from Fattal Legal PLLC';
 	let replacementString = '{{name}}';
 	let subjectReplacementString = '{{company}}';
 	let emailText = `<div dir="ltr">
-		<p>Dear {{name}},</p>
-		<br>
-		<p>I am reaching out to see if you have any interest in a referral arrangement with my firm, Fattal Legal PLLC, should you have any clients that require a corporate and securities attorney. Having worked both in-house and in law firms, across corporate, securities, M&A and real estate law, my legal experience is unique.</p>
-		<br>
-		<p>
-			For your consideration, please note my law firm website,
-			<strong>
-				<a href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
-					id="m_-6002395602624647452m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA18e1aa00-6eed-04f6-499c-6e8a43341e24"
+	<p>Dear {{name}},</p>
+	<p>I am following-up on my e-mail from last month regarding my firm, Fattal Legal PLLC, which is dedicated to a
+		corporate and securities law practice.</p>
+	<p>Having worked as an attorney both in-house and at a top New York law firm, across corporate, securities, M&amp;A
+		and real estate law, I have a unique appreciation for the business and legal challenges facing entrepreneurs and
+		startups.</p>
+	<p>
+		<span>
+			For additional information, please find some useful links from Fattal Legal PLLC
+			(<b><a href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
 					target="_blank"
-					data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&source=gmail&ust=1710513595717000&usg=AOvVaw2Y4gtEmBqaT3_UW0XzZgZt">fattallegal.com</a></strong>, as well as my latest <a
-				href="https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p=eyJzIjoid253RXhMeTFNSElwSk9FeHNrVERFZE9ZU1o0IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY19lZTRmOTRkZjRjNzg0ODMyYWUzMDRmNGQ1NzM3NzJlMC5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjdkODEzNmU4ZmU1MTJjMTlmMmZmNGMyMWE0ZGYzOGIzYTM4NDY5MzVcIl19In0"
-				id="m_-6002395602624647452m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA02b9e305-6459-2950-88e0-5213136a50e6"
-				target="_blank"
-				data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p%3DeyJzIjoid253RXhMeTFNSElwSk9FeHNrVERFZE9ZU1o0IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY19lZTRmOTRkZjRjNzg0ODMyYWUzMDRmNGQ1NzM3NzJlMC5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjdkODEzNmU4ZmU1MTJjMTlmMmZmNGMyMWE0ZGYzOGIzYTM4NDY5MzVcIl19In0&source=gmail&ust=1710513595717000&usg=AOvVaw0dC5QD7Qp6y_l05_F1p3Ia"
-				jslog="32272; 1:WyIjdGhyZWFkLWY6MTc5MzIxMzMzOTUyODczNDIwMnxtc2ctZjoxNzkzNTEyOTAyMjg5MjU4OTkxIl0.; 4:WyIjbXNnLWY6MTc5MzUxMjkwMjI4OTI1ODk5MSJd">Resume</a>
-				and an <a
-				href="https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p=eyJzIjoiV1p5M1V5TURLZVRmQ013THl1Y1ZnTDd6OWdJIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY183MDRlYTg0NGQ0OWQ0ZmE4YjEzM2I2OWNiNDUzYTA2Yy5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjE2YmVhY2RhOTVmNDE3YzM4YzY5ZTgyMmE5MjFlMTIyMDdjODBkNjhcIl19In0"
-				id="m_-6002395602624647452m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA2ba62f56-7990-1b77-bcc9-51ef4c62f79a"
-				target="_blank"
-				data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p%3DeyJzIjoiV1p5M1V5TURLZVRmQ013THl1Y1ZnTDd6OWdJIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY183MDRlYTg0NGQ0OWQ0ZmE4YjEzM2I2OWNiNDUzYTA2Yy5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjE2YmVhY2RhOTVmNDE3YzM4YzY5ZTgyMmE5MjFlMTIyMDdjODBkNjhcIl19In0&source=gmail&ust=1710513595717000&usg=AOvVaw1Cq2ms3TRqGWCSI6yg1_Hx"
-				jslog="32272; 1:WyIjdGhyZWFkLWY6MTc5MzIxMzMzOTUyODczNDIwMnxtc2ctZjoxNzkzNTEyOTAyMjg5MjU4OTkxIl0.; 4:WyIjbXNnLWY6MTc5MzUxMjkwMjI4OTI1ODk5MSJd">Information
-				Sheet</a>
-				<i>(Click to view).</i>
-		</p>
-		<br>
-		<p>Please let me know if you'd like to schedule a call to discuss.</p>
-		<br>
-		<p>Thanks & regards,</p>
-		<br>
-		<p>Jack</p>
-		<br/>
+					data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&amp;source=gmail&amp;ust=1712148326440000&amp;usg=AOvVaw2UeU4Gzg9azgkMter63GlM"
+					data-saferedirectreason="12">fattallegal.com</a></b>):
+		</span>
+	</p>
+	<p>- <a href="https://1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com/ugd/1c52ec_6eb55cc137454cffac0ce0e6fdcaf3f4.pdf"
+			target="_blank">Article: Why Your Start-Up Needs A Securities Lawyer</a></p>
+	<p>- <a href="https://1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com/ugd/1c52ec_704ea844d49d4fa8b133b69cb453a06c.pdf"
+			target="_blank"
+			data-saferedirecturl="https://www.google.com/url?q=https://1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com/ugd/1c52ec_704ea844d49d4fa8b133b69cb453a06c.pdf&amp;source=gmail&amp;ust=1712148326440000&amp;usg=AOvVaw01p8FjzV52F9i8N9iSWy7u"
+			data-saferedirectreason="2">Information Sheet</a></p>
+	<p>- <a href="https://1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com/ugd/1c52ec_ee4f94df4c784832ae304f4d573772e0.pdf"
+			target="_blank"
+			data-saferedirecturl="https://www.google.com/url?q=https://1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com/ugd/1c52ec_ee4f94df4c784832ae304f4d573772e0.pdf&amp;source=gmail&amp;ust=1712148326440000&amp;usg=AOvVaw1EpVUAZYcfGz4sdfB9-5PQ"
+			data-saferedirectreason="2">Resume</a></p>
+	<p>Kind regards,</p>
+	<p>Jack</p>
+	<div>
 		<div>
 			<div>
 				<div>
-					<div><img
-							src="https://ci3.googleusercontent.com/meips/ADKq_NbKnOT2CtyM4WaOPK1jKFH8f3ZriVXDMdNwBeiIDdw4-46nJvJ7PcX6Esd_TT6Db655EJ9VrL8gtX3uR6fLcsh0cetbBhbBa9IZg4PICGkRQyUgaEFbYsQJxAh4Ug=s0-d-e1-ft#https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
-							alt="Logo dark green.png" width="167" height="72" style="margin-right:0px" class="CToWUd"
-							data-bit="iit"><br></div>
-					<div><b>
-							<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ.</font>
-						</b></div>
-					<div><b>
-							<font face="tahoma, sans-serif" color="#000000">Attorney at Law</font>
-						</b></div>
-					<div><b>
-							<font face="tahoma, sans-serif" color="#000000"><br></font>
-						</b></div>
+					<img src="https://ci3.googleusercontent.com/meips/ADKq_NbKnOT2CtyM4WaOPK1jKFH8f3ZriVXDMdNwBeiIDdw4-46nJvJ7PcX6Esd_TT6Db655EJ9VrL8gtX3uR6fLcsh0cetbBhbBa9IZg4PICGkRQyUgaEFbYsQJxAh4Ug=s0-d-e1-ft#https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
+						alt="Logo dark green.png" width="167" height="72" style="margin-right:0px" class="CToWUd"
+						data-bit="iit">
+				</div>
+				<div>
+					<b>
+						<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ.</font>
+					</b>
+				</div>
+				<div>
+					<b>
+						<font face="tahoma, sans-serif" color="#000000">Attorney at Law</font>
+					</b>
+				</div>
+				<div>
+					<font face="tahoma, sans-serif" color="#000000">30 Wall Street, 8th Floor, New York, NY
+						10005
+					</font>
 					<div>
-						<font face="tahoma, sans-serif" color="#000000">30 Wall Street, 8th Floor, New York, NY 
-							10005<br></font>
-						<div>
-							<font face="tahoma, sans-serif" color="#000000">Direct: +1 (917) 480-1169</font>
-						</div>
-						<div>
-							<font face="tahoma, sans-serif" color="#000000"><a href="mailto:jack@fattallegal.com"
-									target="_blank">jack@fattallegal.com</a>  <span
-									style="font-size:13px">|</span>  <a
-									href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
-									target="_blank"
-									data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&source=gmail&ust=1710513595718000&usg=AOvVaw3X3NdkYT618_TZpmfXlHg8">www.<wbr>fattallegal.com</a>
-							</font>
-						</div>
-						<div>
-							<font face="tahoma, sans-serif" color="#000000"><br></font>
-						</div>
-						<div>
-							<table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;width:996px">
-								<tbody>
-									<tr>
-										<td align="left" style="vertical-align:top">
-											<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
-												<tbody>
-													<tr style="font-size:13px">
-														<td align="left" style="vertical-align:top">
-															<font face="tahoma, sans-serif" color="#000000"> <br>
-															</font>
-														</td>
-													</tr>
-													<tr>
-														<td align="left" style="vertical-align:top">
-															<table cellpadding="0" cellspacing="0" border="0"
-																style="font-size:13px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
-																<tbody>
-																	<tr style="font-size:13px">
-																		<td>
-																			<font face="tahoma, sans-serif" color="#000000">
-																				<span
-																					style="text-decoration-line:underline">Privileged
-																					Information</span>: This message,
-																				together with any attachments, is intended
-																				only for the use of the individual or entity
-																				to which it is addressed and may contain
-																				information that is legally privileged,
-																				confidential and/or exempt from disclosure.
-																				If you are not the intended recipient, you
-																				are hereby notified that any use,
-																				dissemination, distribution, or copying of
-																				this message, or any attachment, is strictly
-																				prohibited. If you have received this
-																				message in error, please delete this
-																				message, along with any attachments, from
-																				your computer. Thank you. </font>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<font face="tahoma, sans-serif" color="#000000">Direct: +1 (646) 386-0800</font>
+					</div>
+					<div>
+						<font face="tahoma, sans-serif" color="#000000">
+							<a href="mailto:jack@fattallegal.com" target="_blank">jack@fattallegal.com</a>
+							<span style="font-size:13px">|</span>
+							<a href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
+								target="_blank"
+								data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&source=gmail&ust=1710513595718000&usg=AOvVaw3X3NdkYT618_TZpmfXlHg8">www.<wbr>fattallegal.com</a>
+						</font>
+					</div>
+					<div>
+						<table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;width:996px">
+							<tbody>
+								<tr>
+									<td align="left" style="vertical-align:top">
+										<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
+											<tbody>
+												<tr style="font-size:13px">
+													<td align="left" style="vertical-align:top">
+														<font face="tahoma, sans-serif" color="#000000">
+															<br />
+														</font>
+													</td>
+												</tr>
+												<tr>
+													<td align="left" style="vertical-align:top">
+														<table cellpadding="0" cellspacing="0" border="0"
+															style="font-size:13px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
+															<tbody>
+																<tr style="font-size:13px">
+																	<td>
+																		<font face="tahoma, sans-serif" color="#000000">
+																			<span
+																				style="text-decoration-line:underline">Attorney
+																				Advertising</span>: This message,
+																			together with any attachments, includes
+																			achievements and results obtained while
+																			practicing law at prior law firms or legal
+																			departments, before the launch of Fattal
+																			Legal PLLC. The reference to a "top New York
+																			law firm" refers to a well ranking
+																			securities law firm based in New York.
+																		</font>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+												<tr style="font-size:13px">
+													<td align="left" style="vertical-align:top">
+														<font face="tahoma, sans-serif" color="#000000">
+															<br />
+														</font>
+													</td>
+												</tr>
+												<tr>
+													<td align="left" style="vertical-align:top">
+														<table cellpadding="0" cellspacing="0" border="0"
+															style="font-size:13px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
+															<tbody>
+																<tr style="font-size:13px">
+																	<td>
+																		<font face="tahoma, sans-serif" color="#000000">
+																			<span
+																				style="text-decoration-line:underline">Privileged
+																				Information</span>: This message,
+																			together with any attachments, is intended
+																			only for the use of the individual or entity
+																			to which it is addressed and may contain
+																			information that is legally privileged,
+																			confidential and/or exempt from disclosure.
+																			If you are not the intended recipient, you
+																			are hereby notified that any use,
+																			dissemination, distribution, or copying of
+																			this message, or any attachment, is strictly
+																			prohibited. If you have received this
+																			message in error, please delete this
+																			message, along with any attachments, from
+																			your computer. Thank you.
+																		</font>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>`;
+	</div>
+</div>
+`;
 	let emailOutput = emailText;
 
 	let start, end;
@@ -179,7 +210,12 @@
 			const reader = new FileReader();
 			reader.onload = function (event) {
 				ignorelistFileContent = event.target.result;
-				ignoreArray = ignorelistFileContent.split('\r\n');
+				ignoreArray = ignorelistFileContent.split('\r\n').filter(row => {
+					return row != "Email";
+				}).filter(row => {
+					return row != "";
+				});
+				
 				if(ignoreArray) {
 					ignorelistFileCount = ignoreArray.length;
 				}
@@ -192,7 +228,9 @@
 		if(fileContent && fileContent.length > 0) {
 			csv = csvToJson(fileContent);
 			if(csv) {
-				fileCount = csv.length;
+				fileCount = csv.filter(row => {
+					return Object.keys(row).length !== 0;
+				}).length;
 				updateEmailOutput()
 			}
 		} else {
@@ -202,14 +240,14 @@
 		}
 	}
 
-	function updateEmailOutput() {
+	function updateEmailOutput(row = 0) {
 		if((emailText && emailText.length > 0)) {
-			emailOutput = emailText.replace(replacementString, csv[0][selectedNameColumn]);
+			emailOutput = emailText.replace(replacementString, csv[row][selectedNameColumn]);
 		} 
 	}
 
-	function setSubject() {
-		subject = subjectInput.replace(subjectReplacementString, csv[0][selectedSubjectColumn]);
+	function setSubject(row = 0) {
+		subject = subjectInput.replace(subjectReplacementString, csv[row][selectedSubjectColumn]);
 	}
 
 	function setSelectVariables() {
@@ -224,6 +262,8 @@
 				selectedEmailColumn = "email address";
 			} else if(columns.includes('email_address')) {
 				selectedEmailColumn = "email_address";
+			} else if(columns.includes('email_first')) {
+				selectedEmailColumn = "email_first";
 			}
 
 			if(columns.includes('First Name')) {
@@ -283,7 +323,7 @@
 
 	function incrementProgress() {
 		count++;
-		progressAmount = (count / fileCount) * 100;
+		progressAmount = (count / fileCount - ignorelistFileCount) * 100;
 		if(progressAmount == 100) {
 			end = performance.now();
 			console.log(`It took ${end - start} ms.`);
@@ -311,7 +351,7 @@
 			});
 
 			const data = await response.json();
-			console.log(data);
+			console.log(data[0]);
 			incrementProgress();
 		} catch (error) {
 			console.error('Error:', error);
@@ -320,27 +360,27 @@
 
 
 	function triggerSendEmails() {
-		let ignoreIgnore = false;
-		console.log(ignorelistFileCount);
-		if(ignorelistFileCount == 0 && confirm('!!No Ignore List!!')) {
-			ignoreIgnore = true;
-		} else {
-			ignoreIgnore = false;
-		}
-
-		if(ignoreIgnore) {
+		if(ignorelistFileCount > 0 || confirm('!!No Ignore List!!')) {
+			ignored = 0;
 			count = 0;
 			progressAmount = 0;
 			start = performance.now();
-			const filteredCsv = csv.filter(function(row) {
-				return ignoreArray.includes(row[selectedEmailColumn]) === false;
+			const filteredCsv = csv.filter(row => {
+					return Object.keys(row).length !== 0;
+				}).filter(function(row) {
+				const isIncuded = ignoreArray.includes(row[selectedEmailColumn]) === false;
+				if(!isIncuded) {
+					ignored++;
+				}
+				return isIncuded;
 			});
-			console.log(csv);
-			console.log(filteredCsv);
+			
 			if(fileCount > 0 && confirm(`Confirm Send of ${filteredCsv.length}`)) {
-				filteredCsv.forEach(element => {
+				filteredCsv.forEach((element, id) => {
+					updateEmailOutput(id);
+					setSubject(id);
 					if(element[selectedEmailColumn]) {
-						// sendTransactionalEmail(element[selectedEmailColumn]);
+						sendTransactionalEmail(element[selectedEmailColumn]);
 					} else {
 						incrementProgress();
 					}
@@ -359,7 +399,7 @@
 	<label for='password' class='block col-span-2 mb-4'>Password
 		<input id='password' type='password' bind:value={password} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'/>
 	</label>
-	<!-- {#if password == pw || locationHostname == 'localhost'} -->
+	{#if password == pw || locationHostname == 'localhost'}
 		<form action='' method='post' class='grid grid-cols-2 gap-4 mb-8'>
 			<label for='api-key'>API Key
 				<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
@@ -459,13 +499,13 @@
 			</div>
 		</form>
 
-		{#if progressAmount != 0 && progressAmount != 100}
-			<progress id='sending-progress' value={progressAmount} max='100' class='w-full'>
-				Sending {progressAmount}%
-			</progress>
+		{#if progressAmount > 0 && progressAmount < 100}
+			<progress id='sending-progress' value={progressAmount} max='100' class='w-full'></progress>
+			Sending {progressAmount}%
 		{/if}
-		{#if progressAmount == 100}
+		{#if progressAmount >= 100}
 			<h2 class="text-3xl text-center text-emerald-700 font-bold">Complete!!</h2>
+			<p>{ignored} Emails were ignored;</p>
 		{/if}
 		<div class='grid max-w-md grid-cols-2 gap-4 mx-auto mt-8'>
 			<button id='send-emails' class='bg-red-700 p-4 text-white hover:bg-red-500' on:click={triggerSendEmails}>Send {#if fileCount > 0}{fileCount}{:else}0{/if} Emails</button>
@@ -479,7 +519,7 @@
 				</div>
 			</Draggable>
 		{/if}
-	<!-- {/if} -->
+	{/if}
 </div>
 
 <style>
