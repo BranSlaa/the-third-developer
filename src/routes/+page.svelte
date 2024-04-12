@@ -1,16 +1,16 @@
 <script>
 	let statements = [
 		{
-			title: "Website Development",
-			statement: "With a wealth of experience gained from London's top agencies, I've honed my skills in website development, catering to a diverse clientele ranging from local startups to global enterprises. My approach emphasizes not only creating visually captivating websites but also ensuring they are accessible to all users and fully optimized for seamless operation on mobile devices. By prioritizing accessibility standards and employing responsive design techniques, I ensure that your website reaches a wider audience and delivers an exceptional user experience across all devices.",
+			title: "Crafting Websites with Character",
+			statement: "Drawing from my experience with London's top agencies, I've honed my skills in website development. From local startups to global enterprises, I've catered to diverse clientele. My approach goes beyond aesthetics; I prioritize accessibility and seamless mobile functionality, ensuring your website reaches and resonates with a wider audience.",
 		},
 		{
-			title: "Process Automation",
-			statement: "As a Computer Programmer Analyst, I possess the expertise to simplify your operations. From basic email automation to intricate procedures, I customize systems to suit your exact requirements. This enables you to streamline processes, reduce errors, and focus on driving business growth.",
+			title: "Streamlining Operations with Automation",
+			statement: "As a Computer Programmer Analyst, I specialize in simplifying operations. Whether it's basic email automation or complex procedures, I tailor systems to fit your exact needs. This frees up your time to focus on what matters - driving business growth.",
 		},
 		{
-			title: "Consultation",
-			statement: "Embarking on your journey to establish a powerful online presence can be daunting. That's where I come in. As a dedicated web development professional, I offer comprehensive consultation services tailored to meet the unique needs of your business. Whether you're a budding startup or a growing enterprise, I provide personalized guidance and strategic insights to help you navigate the complexities of website development. From defining your project goals to selecting the right technologies and refining your user experience, I'll be there every step of the way to ensure your vision becomes a reality. Let's collaborate to build a website that not only captures your brand essence but also drives tangible results for your business.",
+			title: "Personalized Consultation for Your Journey",
+			statement: "Embarking on your online journey can feel overwhelming. That's where I step in. Offering personalized consultation services, I guide you through every step of the development process. From defining goals to selecting the right technologies, I'll ensure your vision comes to life. Whether you're a startup or a growing enterprise, let's collaborate to build a website that truly reflects your brand and drives tangible results.",
 		},
 	];
 	let portfolio = [
@@ -20,7 +20,7 @@
 		// 	imageUrl: "/asics-runkeeper.webp"
 		// },
 		{
-			name: "DBINEX",
+			name: "DB Interiors Exteriors",
 			url: "https://dbinex.ca",
 			imageUrl: "/dbinex.webp"
 		},
@@ -78,6 +78,9 @@
 				I look through the surface to peer into the true meaning.<br class="hidden md:block">
 				I am the Third Developer, finding answers that best fit your needs.
 			</p>
+			<p class="text-blue-900 mt-8 max-w-lg mx-auto">
+				In a world obsessed with "what" and "how", I bring the "why".  Having honed my craft working with London's leading agencies, I don't just build websites and automate tasks - I unearth the deeper needs of your business.  Leveraging my experience with diverse clientele, from startups to global corporations, I craft solutions that resonate with your target audience and empower your team to focus on what truly matters - growth.  Let's chat and discover how I can become your secret weapon.
+			</p>
 		</div>
 	</section>
 	<div class='container mx-auto max-w-xl mt-16 flex gap-8 flex-col justify-center items-center relative z-10'>
@@ -90,8 +93,8 @@
 	</div>
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
-			<h2 class="text-5xl text-blue-800 font-bold text-center mb-8">Portfolio</h2>
-			<div class="grid md:grid-cols-3 gap-8">
+			<h2 class="text-4xl text-blue-800 font-bold text-center mb-8">Check Out My Portfolio</h2>
+			<div class="grid md:grid-cols-3 gap-4">
 				{#each portfolio as piece}
 					<a href={piece.url} target="_blank" class='block'>
 						<img class="w-full rounded-lg border-4 border-yellow-500 hover:shadow-lg" src={piece?.imageUrl} alt={piece?.name} />
@@ -105,9 +108,13 @@
 	<section id="contact" class="container mx-auto pt-16 pb-8 max-w-5xl">
 		<div class="flex gap-8 justify-center items-center">
 			<div class="max-w-1/2 text-center">
-				<h2 class="text-blue-900 font-header text-4xl mb-4">I'd love to hear from you</h2>
-				<a href="mailto:branslaa@gmail.com" class="text-blue-900 text-center font-bold text-xl hover:border-b-4  hover:border-yellow-500">branslaa@gmail.com</a>
+				<h2 class="text-blue-900 font-header text-4xl mb-4">Get in Touch</h2>
+				<p>Ready to elevate your online presence?<br>Shoot me an email at <a href="mailto:branslaa@gmail.com" class="text-blue-900 text-center font-bold text-lg hover:border-b-4 hover:border-yellow-500">branslaa@gmail.com</a>. I can't wait to hear from you.</p>
+				
 			</div>
 		</div>
+	</section>
+	<section class="container mx-auto pt-16 pb-8 max-w-5xl text-center">
+		<p>Based out of St Thomas, Ontario.</p>
 	</section>
 </div>
