@@ -24,26 +24,21 @@
 			url: "https://dbinex.ca",
 			imageUrl: "/dbinex.webp"
 		},
-		// {
-		// 	name: "London Research and Care Partners",
-		// 	url: "https://londonresearchandcarepartners.com/",
-		// 	imageUrl: "/health-sciences.webp"
-		// },
-		// {
-		// 	name: "Covent Garden Market",
-		// 	url: "https://coventmarket.com/",
-		// 	imageUrl: "/cgm.webp"
-		// },
+		{
+			name: "London Research and Care Partners",
+			url: "https://londonresearchandcarepartners.com/",
+			imageUrl: "/health-sciences.webp"
+		},
 		// {
 		// 	name: "Running USA",
 		// 	url: "https://runningusa.org/",
 		// 	imageUrl: "/runningusa.webp"
 		// },
-		// {
-		// 	name: "Elemex<sup>®</sup>",
-		// 	url: "https://elemex.ca/",
-		// 	imageUrl: "/elemex.webp"
-		// },
+		{
+			name: "Covent Garden Market",
+			url: "https://coventmarket.com/",
+			imageUrl: "/cgm.webp"
+		},
 		// {
 		// 	name: "KoruK9<sup>®</sup>",
 		// 	url: "https://www.koruk9.com/",
@@ -54,6 +49,11 @@
 		// 	url: "https://www.braintumour.ca/",
 		// 	imageUrl: "/btf.webp"
 		// },
+		{
+			name: "Elemex<sup>®</sup>",
+			url: "https://elemex.ca/",
+			imageUrl: "/elemex.webp"
+		},
 		{
 			name: "Cowbell Brewery",
 			url: "https://cowbellbrewing.com/",
