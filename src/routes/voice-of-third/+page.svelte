@@ -14,8 +14,7 @@
 	let testEmail = 'branslaa@gmail.com';
 	let fromEmail = 'jack@fattallegal.com';
 	let subjectInput = 'Of Counsel position with {{company}}';
-	// let subjectInput = 'Inquiry from Fattal Legal PLLC - {{company}}';
-	// let subjectInput = 'Follow-up from Fattal Legal PLLC';
+	// let subjectInput = 'Introduction - Fattal Legal PLLC';
 	let replacementString = '{{name}}';
 	let subjectReplacementString = '{{company}}';
 	let emailText = `<div dir="ltr">
@@ -53,17 +52,18 @@
 	<p>
 		Jack
 	</p>
+	<br>
 	<div>
 		<div>
 			<div>
 				<div>
-					<img src="https://ci3.googleusercontent.com/meips/ADKq_NbKnOT2CtyM4WaOPK1jKFH8f3ZriVXDMdNwBeiIDdw4-46nJvJ7PcX6Esd_TT6Db655EJ9VrL8gtX3uR6fLcsh0cetbBhbBa9IZg4PICGkRQyUgaEFbYsQJxAh4Ug=s0-d-e1-ft#https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
+					<img src="https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
 						alt="Logo dark green.png" width="167" height="72" style="margin-right:0px" class="CToWUd"
 						data-bit="iit">
 				</div>
 				<div>
 					<b>
-						<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ.</font>
+						<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ. MBA.</font>
 					</b>
 				</div>
 				<div>
@@ -94,38 +94,6 @@
 									<td align="left" style="vertical-align:top">
 										<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
 											<tbody>
-												<tr style="font-size:13px">
-													<td align="left" style="vertical-align:top">
-														<font face="tahoma, sans-serif" color="#000000">
-															<br />
-														</font>
-													</td>
-												</tr>
-												<tr>
-													<td align="left" style="vertical-align:top">
-														<table cellpadding="0" cellspacing="0" border="0"
-															style="font-size:13px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
-															<tbody>
-																<tr style="font-size:13px">
-																	<td>
-																		<font face="tahoma, sans-serif" color="#000000">
-																			<span
-																				style="text-decoration-line:underline">Attorney
-																				Advertising</span>: This message,
-																			together with any attachments, includes
-																			achievements and results obtained while
-																			practicing law at prior law firms or legal
-																			departments, before the launch of Fattal
-																			Legal PLLC. The reference to a "top New York
-																			law firm" refers to a well ranking
-																			securities law firm based in New York.
-																		</font>
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</td>
-												</tr>
 												<tr style="font-size:13px">
 													<td align="left" style="vertical-align:top">
 														<font face="tahoma, sans-serif" color="#000000">
@@ -233,9 +201,9 @@
 	});
 
 	function loadCSV(e = '') {
-		console.log(fileContent);
 		if(fileContent && fileContent.length > 0) {
 			csv = csvToJson(fileContent);
+			console.log(csv);
 			if(csv) {
 				fileCount = csv.filter(row => {
 					return Object.keys(row).length !== 0;
@@ -253,15 +221,17 @@
 	function updateEmailOutput(row = 0, name = '') {
 		if((emailText && emailText.length > 0)) {
 			const value = name ? name : csv[row][selectedNameColumn];
-			emailOutput = emailText.replace(replacementString, value);
+			emailOutput = emailText.replaceAll(replacementString, value);
 		}
 	}
 
 	function setSubject(row = 0, subjectVar = '') {
 		const value = subjectVar ? subjectVar : csv[row][selectedSubjectColumn];
-		subject = subjectInput.replace(subjectReplacementString, value);
-		console.log(value);
-		console.log(subject);
+		if (value) {
+			subject = subjectInput.replace(subjectReplacementString, value);
+		} else {
+			subject = 'Of Counsel position';
+		}
 	}
 
 	function setSelectVariables() {
@@ -298,6 +268,8 @@
 				selectedSubjectColumn = 'company';
 			} else if(columns.includes('Company Name')) {
 				selectedSubjectColumn = 'Company Name';
+			} else if(columns.includes('Company Name for Emails')) {
+				selectedSubjectColumn = 'Company Name for Emails';
 			} else if(columns.includes('company name')) {
 				selectedSubjectColumn = 'company name';
 			} else if(columns.includes('company_name')) {
@@ -322,7 +294,7 @@
 			.map(m => m[2])  // we only want the second capture group
 			.slice(0, -1);   // cut off blank match at the end
 
-		const lines = text.split('\n');
+		const lines = text.split('\n').filter(line => line);
 		const heads = headers ?? match(lines.shift());
 		columns = heads;
 		return lines.map(line => {
@@ -413,7 +385,7 @@
 	<label for='password' class='block col-span-2 mb-4'>Password
 		<input id='password' type='password' bind:value={password} class='block w-full border-2 border-sky-500 bg-sky-100 p-2'/>
 	</label>
-	{#if password == pw || locationHostname == 'localhost'}
+	<!-- {#if password == pw || locationHostname == 'localhost'} -->
 		<form action='' method='post' class='grid grid-cols-2 gap-4 mb-8'>
 			<label for='api-key'>API Key
 				<input id='api-key' type='text' name='api-key' bind:value={apiKey} class='block w-full border-2 border-yellow-500 bg-yellow-100 p-2'>
@@ -533,7 +505,7 @@
 				</div>
 			</Draggable>
 		{/if}
-	{/if}
+	<!-- {/if} -->
 </div>
 
 <style>
