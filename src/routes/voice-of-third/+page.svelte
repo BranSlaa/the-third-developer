@@ -13,131 +13,156 @@
 	let count, ignored, fileCount, ignorelistFileCount = 0;
 	let testEmail = 'branslaa@gmail.com';
 	let fromEmail = 'jack@fattallegal.com';
-	let subjectInput = 'Of Counsel position with {{company}}';
-	// let subjectInput = 'Introduction - Fattal Legal PLLC';
+	// let subjectInput = 'Of Counsel position with {{company}}';
+	let subjectInput = 'Introduction - Fattal Legal PLLC';
+	// const backup = 'Of Counsel position';
+	const backup = '';
 	let replacementString = '{{name}}';
 	let subjectReplacementString = '{{company}}';
-	let emailText = `<div dir="ltr">
-	<p>Dear {{name}},</p>
-	<p>I would like to submit my candidacy for an Of Counsel position with your firm.</p>
-	<p>
-		A brief summary of my experience - I've worked for reputable securities law firms,&nbsp;<a
-			href="https://www.legalandcompliance.com/" target="_blank"
-			data-saferedirecturl="https://www.google.com/url?q=https://www.legalandcompliance.com/&amp;source=gmail&amp;ust=1713609612709000&amp;usg=AOvVaw26x15zihN950ZZb_vWVpHR">Anthony,
-			Linder &amp; Cacomanolis, PLLC</a>&nbsp;and&nbsp;<a href="https://srfc.law/" target="_blank"
-			data-saferedirecturl="https://www.google.com/url?q=https://srfc.law/&amp;source=gmail&amp;ust=1713609612709000&amp;usg=AOvVaw0jW0LrXWeVcDdOf2EUxdSP">Sichenzia
-			Ross Ference Carmel LLP</a>, the latter being the second largest securities only law practice in the United
-		States.&nbsp;Prior to that, I served as General Counsel at&nbsp;<a href="https://sohoproperties.com/"
+	let emailText = `<div dir="ltr">Dear {{name}},<br><br>I am reaching out to introduce my firm, Fattal Legal PLLC, which is dedicated
+	to a U.S. corporate and securities law practice.<br><br></div>
+<div dir="ltr">Having worked as an attorney both in-house and at a top New York law firm, across corporate, securities,
+	M&amp;A and real estate law, I have a unique appreciation for the business and legal challenges facing entrepreneurs
+	and startups.&nbsp;</div>
+<div dir="ltr"><br></div>
+<div dir="ltr">My focus includes Equity Crowdfunding for UK startups seeking to raise capital in the United&nbsp;States,
+	which I believe is an innovative way for UK businesses to raise capital while reaching out to people who use their
+	products or services, and support their company's mission.</div>
+<div dir="ltr"><br></div>
+<div dir="ltr"><span style="color:rgb(0,0,0)">For additional information, please note my law firm
+		website,&nbsp;</span><b style="color:rgb(0,0,0)"><a
+			href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
+			id="m_793623735430950854m_-3310350165190478595m_7007021491015731969m_-2267426861099144659m_5903895977364997568m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA18e1aa00-6eed-04f6-499c-6e8a43341e24"
 			target="_blank"
-			data-saferedirecturl="https://www.google.com/url?q=https://sohoproperties.com/&amp;source=gmail&amp;ust=1713609612709000&amp;usg=AOvVaw23dkCucdjUg7lJ7-C03joI">Soho
-			Properties</a>, a Manhattan-based real estate development and investment firm, with upwards of $750 million
-		AUM, as well as counsel to a global Japanese private equity fund.
-	</p>
-	<p>
-		Throughout my legal career, I've acquired significant real estate, securities and fund management expertise. I
-		have also advised large bulge bracket investment banks and funds on 9-figure IPOs, follow-up public offerings
-		and M&amp;A transactions.
-	</p>
-	<p>
-		Kindly find my&nbsp;<a
-			href="https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p=eyJzIjoid253RXhMeTFNSElwSk9FeHNrVERFZE9ZU1o0IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY19lZTRmOTRkZjRjNzg0ODMyYWUzMDRmNGQ1NzM3NzJlMC5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjdkODEzNmU4ZmU1MTJjMTlmMmZmNGMyMWE0ZGYzOGIzYTM4NDY5MzVcIl19In0"
-			id="m_-4022347468414107674m_-1108419310424304394m_8470860669857238786m_5254084472397693468m_3520055799005496377m_1970476161965459081m_-1674809859583985670m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA02b9e305-6459-2950-88e0-5213136a50e6"
-			target="_blank"
-			data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/1c52ec99-0f1f-4b42-8a08-0bc279855175.usrfiles.com?p%3DeyJzIjoid253RXhMeTFNSElwSk9FeHNrVERFZE9ZU1o0IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcLzFjNTJlYzk5LTBmMWYtNGI0Mi04YTA4LTBiYzI3OTg1NTE3NS51c3JmaWxlcy5jb21cXFwvdWdkXFxcLzFjNTJlY19lZTRmOTRkZjRjNzg0ODMyYWUzMDRmNGQ1NzM3NzJlMC5wZGZcIixcImlkXCI6XCJlYWViODFlZDhiYjc0YmZjOGJhNTQ3NzUzOTZiZTA5Y1wiLFwidXJsX2lkc1wiOltcIjdkODEzNmU4ZmU1MTJjMTlmMmZmNGMyMWE0ZGYzOGIzYTM4NDY5MzVcIl19In0&amp;source=gmail&amp;ust=1713609612709000&amp;usg=AOvVaw0qPoEJcZd0NF33RfK1-cvc">resume</a>&nbsp;for
-		your consideration. Please let me know if you would like to schedule a call to discuss.
-	</p>
-	<p>
-		Thanks &amp; regards,
-	</p>
-	<p>
-		Jack
-	</p>
-	<br>
+			data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiTmU3TEV3OHMwZDBTM0c3MG5NS2s4cnRxaDZnIiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcImVhZWI4MWVkOGJiNzRiZmM4YmE1NDc3NTM5NmJlMDljXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&amp;source=gmail&amp;ust=1714227234636000&amp;usg=AOvVaw3_X7OcWovTyr2wtxFVsye0">fattallegal.com</a></b><span
+		style="color:rgb(0,0,0)">, as well as my latest&nbsp;</span><a
+		href="https://fattallegal.com/resume"
+		id="m_793623735430950854m_-3310350165190478595m_7007021491015731969m_-2267426861099144659m_5903895977364997568m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA02b9e305-6459-2950-88e0-5213136a50e6"
+		target="_blank"
+		data-saferedirecturl="https://www.google.com/url?q=https://fattallegal.com/resume">Resume</a><span
+		style="color:rgb(0,0,0)">&nbsp;and an&nbsp;</span><a href="https://fattallegal.com/information-sheet"
+		id="m_793623735430950854m_-3310350165190478595m_7007021491015731969m_-2267426861099144659m_5903895977364997568m_-5915180632718281613m_-6958545866954057562m_-282793025844465184m_8941542679448545950m_-2166160337350006483m_-1980819654890607052m_2412463137804061028OWA2ba62f56-7990-1b77-bcc9-51ef4c62f79a"
+		target="_blank"
+		data-saferedirecturl="https://www.google.com/url?q=https://fattallegal.com/information-sheet">Information
+		Sheet</a><span style="color:rgb(0,0,0)">&nbsp;</span><i style="color:rgb(0,0,0)">(Click to view)</i><span
+		style="color:rgb(0,0,0)">.</span><br></div>
+<div dir="ltr">
 	<div>
 		<div>
-			<div>
+			<div style="direction:ltr">
+				<font color="#000000"><br></font>
+			</div>
+			<div style="direction:ltr">
+				<font color="#000000">Kind regards,</font>
+			</div>
+			<div style="direction:ltr">
+				<font color="#000000"><br></font>
+			</div>
+			<div style="direction:ltr">
+				<font color="#000000">Jack</font>
+			</div>
+			<div style="color:rgb(0, 0, 0);direction:ltr"><br></div>
+			<div style="color:rgb(0, 0, 0);direction:ltr"><br></div>
+			<div style="color:rgb(0, 0, 0);direction:ltr">
 				<div>
-					<img src="https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
-						alt="Logo dark green.png" width="167" height="72" style="margin-right:0px" class="CToWUd"
-						data-bit="iit">
-				</div>
-				<div>
-					<b>
-						<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ. MBA.</font>
-					</b>
-				</div>
-				<div>
-					<b>
-						<font face="tahoma, sans-serif" color="#000000">Attorney at Law</font>
-					</b>
-				</div>
-				<div>
-					<font face="tahoma, sans-serif" color="#000000">30 Wall Street, 8th Floor, New York, NY
-						10005
-					</font>
+					<div><br><img src="https://visitvisit.com/wp-content/uploads/2024/03/Fattal-Legal-PLLC.png"
+							alt="Logo dark green.png" width="131" height="57" style="margin-right:0px"
+							data-image-whitelisted="" class="CToWUd" data-bit="iit"><span
+							style="color:rgb(0, 0, 0)"></span><br></div>
+					<div><b>
+							<font face="tahoma, sans-serif" color="#000000">Jack A. Fattal, ESQ. MBA.</font>
+						</b></div>
+					<div><b>
+							<font face="tahoma, sans-serif" color="#000000">Attorney at Law</font>
+						</b></div>
+					<div><b>
+							<font face="tahoma, sans-serif" color="#000000"><br></font>
+						</b></div>
 					<div>
-						<font face="tahoma, sans-serif" color="#000000">Direct: +1 (646) 386-0800</font>
-					</div>
-					<div>
-						<font face="tahoma, sans-serif" color="#000000">
-							<a href="mailto:jack@fattallegal.com" target="_blank">jack@fattallegal.com</a>
-							<span style="font-size:13px">|</span>
-							<a href="https://mandrillapp.com/track/click/31507467/fattallegal.com?p=eyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ"
-								target="_blank"
-								data-saferedirecturl="https://www.google.com/url?q=https://mandrillapp.com/track/click/31507467/fattallegal.com?p%3DeyJzIjoiMWdabTFIQVFKY0FKdHRwakMzU2NEeFN4Y0h3IiwidiI6MSwicCI6IntcInVcIjozMTUwNzQ2NyxcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZmF0dGFsbGVnYWwuY29tXFxcL1wiLFwiaWRcIjpcIjljODg2ZTJjNTU5MzQzZGQ4YmY0N2FlZGYzODE2ODBkXCIsXCJ1cmxfaWRzXCI6W1wiMWM2NDljMDkzYjM4Y2Q3Yjc1YmE4ZmIyYTI2MmU4NWQ5ZmY5Yzk4N1wiXX0ifQ&source=gmail&ust=1710513595718000&usg=AOvVaw3X3NdkYT618_TZpmfXlHg8">www.<wbr>fattallegal.com</a>
-						</font>
-					</div>
-					<div>
-						<table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;width:996px">
-							<tbody>
-								<tr>
-									<td align="left" style="vertical-align:top">
-										<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
-											<tbody>
-												<tr style="font-size:13px">
-													<td align="left" style="vertical-align:top">
-														<font face="tahoma, sans-serif" color="#000000">
-															<br />
-														</font>
-													</td>
-												</tr>
-												<tr>
-													<td align="left" style="vertical-align:top">
-														<table cellpadding="0" cellspacing="0" border="0"
-															style="font-size:13px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
-															<tbody>
-																<tr style="font-size:13px">
-																	<td>
-																		<font face="tahoma, sans-serif" color="#000000">
-																			<span
-																				style="text-decoration-line:underline">Privileged
-																				Information</span>: This message,
-																			together with any attachments, is intended
-																			only for the use of the individual or entity
-																			to which it is addressed and may contain
-																			information that is legally privileged,
-																			confidential and/or exempt from disclosure.
-																			If you are not the intended recipient, you
-																			are hereby notified that any use,
-																			dissemination, distribution, or copying of
-																			this message, or any attachment, is strictly
-																			prohibited. If you have received this
-																			message in error, please delete this
-																			message, along with any attachments, from
-																			your computer. Thank you.
-																		</font>
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<font face="tahoma, sans-serif" color="#000000">30 Wall Street, 8th Floor, New York, NY&nbsp;
+							10005<br></font>
+						<div>
+							<font face="tahoma, sans-serif" color="#000000">Direct:&nbsp;+1 (646) 386-0800</font>
+						</div>
+						<div>
+							<font face="tahoma, sans-serif" color="#000000"><a href="mailto:jack@fattallegal.com"
+									target="_blank">jack@fattallegal.com</a>&nbsp;&nbsp;<span
+									style="font-size:14.67px">|</span>&nbsp;&nbsp;<a href="http://fattallegal.com/"
+									target="_blank"
+									data-saferedirecturl="https://www.google.com/url?q=http://fattallegal.com/&amp;source=gmail&amp;ust=1714227234636000&amp;usg=AOvVaw0xlsC77BaZ0-2Gz7XEbvuS">www.<wbr>fattallegal.com</a>
+							</font>
+						</div>
+						<div>
+							<table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;width:996px">
+								<tbody>
+									<tr>
+										<td align="left" style="vertical-align:top">
+											<table cellpadding="0" cellspacing="0" border="0" style="color:rgb(0,0,1)">
+												<tbody>
+													<tr style="font-size:16px">
+														<td align="left" style="vertical-align:top">&nbsp;&nbsp;<font
+																face="tahoma, sans-serif" color="#000000">&nbsp;<br>
+															</font>
+															<font face="tahoma, sans-serif" size="2"><u>Attorney
+																	Advertising</u>: This message, together with any
+																attachments, includes achievements and results obtained
+																while practicing law at prior law firms or legal
+																departments, before the launch of Fattal Legal PLLC. The
+																reference to a "top New York law firm" refers to a well
+																ranking securities law firm based in New York.&nbsp;
+															</font>
+															<table cellpadding="0" cellspacing="0" border="0"
+																style="font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
+																<tbody>
+																	<tr style="font-size:13.33px">
+																		<td>
+																			<font face="tahoma, sans-serif"
+																				color="#000000"><br></font>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+													<tr>
+														<td align="left" style="vertical-align:top">
+															<table cellpadding="0" cellspacing="0" border="0"
+																style="font-size:16px;font-family:Calibri,Arial,sans-serif;text-align:justify;width:996px">
+																<tbody>
+																	<tr style="font-size:13.33px">
+																		<td>
+																			<font face="tahoma, sans-serif"
+																				color="#000000"><span
+																					style="text-decoration-line:underline">Privileged
+																					Information</span>: This message,
+																				together with any attachments, is
+																				intended only for the use of the
+																				individual or entity to which it is
+																				addressed and may contain information
+																				that is legally privileged, confidential
+																				and/or exempt from disclosure. If you
+																				are not the intended recipient, you are
+																				hereby notified that any use,
+																				dissemination, distribution, or copying
+																				of this message, or any attachment, is
+																				strictly prohibited. If you have
+																				received this message in error, please
+																				delete this message, along with any
+																				attachments, from your computer. Thank
+																				you.&nbsp;</font>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -230,7 +255,7 @@
 		if (value) {
 			subject = subjectInput.replace(subjectReplacementString, value);
 		} else {
-			subject = 'Of Counsel position';
+			subject = backup;
 		}
 	}
 

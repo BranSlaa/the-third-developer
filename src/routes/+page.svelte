@@ -14,11 +14,6 @@
 		},
 	];
 	let portfolio = [
-		// {
-		// 	name: "ASICS Runkeeper",
-		// 	url: "https://runkeeper.com/cms/",
-		// 	imageUrl: "/asics-runkeeper.webp"
-		// },
 		{
 			name: "DB Interiors Exteriors",
 			url: "https://dbinex.ca",
@@ -29,26 +24,16 @@
 			url: "https://londonresearchandcarepartners.com/",
 			imageUrl: "/health-sciences.webp"
 		},
-		// {
-		// 	name: "Running USA",
-		// 	url: "https://runningusa.org/",
-		// 	imageUrl: "/runningusa.webp"
-		// },
 		{
 			name: "Covent Garden Market",
 			url: "https://coventmarket.com/",
 			imageUrl: "/cgm.webp"
 		},
-		// {
-		// 	name: "KoruK9<sup>®</sup>",
-		// 	url: "https://www.koruk9.com/",
-		// 	imageUrl: "/koruk9.webp"
-		// },
-		// {
-		// 	name: "Brain Tumour Foundation of Canada",
-		// 	url: "https://www.braintumour.ca/",
-		// 	imageUrl: "/btf.webp"
-		// },
+		{
+			name: "MD Lawyers",
+			url: "https://md-lawyers.ca/",
+			imageUrl: "/md-lawyers.webp"
+		},
 		{
 			name: "Elemex<sup>®</sup>",
 			url: "https://elemex.ca/",
