@@ -1,18 +1,4 @@
 <script>
-	let statements = [
-		{
-			title: "Crafting Websites with Character",
-			statement: "Drawing from my experience with London's top agencies, I've honed my skills in website development. From local startups to global enterprises, I've catered to diverse clientele. My approach goes beyond aesthetics; I prioritize accessibility and seamless mobile functionality, ensuring your website reaches and resonates with a wider audience.",
-		},
-		{
-			title: "Streamlining Operations with Automation",
-			statement: "As a Computer Programmer Analyst, I specialize in simplifying operations. Whether it's basic email automation or complex procedures, I tailor systems to fit your exact needs. This frees up your time to focus on what matters - driving business growth.",
-		},
-		{
-			title: "Personalized Consultation for Your Journey",
-			statement: "Embarking on your online journey can feel overwhelming. That's where I step in. Offering personalized consultation services, I guide you through every step of the development process. From defining goals to selecting the right technologies, I'll ensure your vision comes to life. Whether you're a startup or a growing enterprise, let's collaborate to build a website that truly reflects your brand and drives tangible results.",
-		},
-	];
 	let portfolio = [
 		{
 			name: "DB Interiors Exteriors",
@@ -69,12 +55,26 @@
 		</div>
 	</section>
 	<div class='container mx-auto max-w-xl mt-16 flex gap-8 flex-col justify-center items-center relative z-10'>
-		{#each statements as statement}
-			<div>
-				<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2 after:content-[""] after:absolute after:bottom-0 after:left-0 after:h-4 after:w-full after:bg-yellow-500 after:-z-10'>{statement.title}</h2>
-				<p class="text-blue-900 text-center md:text-left">{statement.statement}</p>
-			</div>
-		{/each}
+		<div>
+			<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2'>
+				<span class="bg-gradient">Crafting Websites</span>
+				<span class="bg-gradient"> with Character</span></h2>
+			<p class="text-blue-900 text-center md:text-left">Drawing from my experience with London's top agencies, I've honed my skills in website development. From local startups to global enterprises, I've catered to diverse clientele. My approach goes beyond aesthetics; I prioritize accessibility and seamless mobile functionality, ensuring your website reaches and resonates with a wider audience.</p>
+		</div>
+		<div>
+			<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2'>
+				<span class="bg-gradient">Streamlining Operations</span>
+				<span class="bg-gradient">with Automation</span>
+			</h2>
+			<p class="text-blue-900 text-center md:text-left">As a Computer Programmer Analyst, I specialize in simplifying operations. Whether it's basic email automation or complex procedures, I tailor systems to fit your exact needs. This frees up your time to focus on what matters - driving business growth.</p>
+		</div>
+		<div>
+			<h2 class='relative text-center mx-auto md:mx-0 md:text-left text-3xl w-fit font-header font-bold text-blue-800 mb-2'>
+				<span class="bg-gradient">Personalized Consultation</span>
+				<span class="bg-gradient">for Your Journey</span>
+			</h2>
+			<p class="text-blue-900 text-center md:text-left">Embarking on your online journey can feel overwhelming. That's where I step in. Offering personalized consultation services, I guide you through every step of the development process. From defining goals to selecting the right technologies, I'll ensure your vision comes to life. Whether you're a startup or a growing enterprise, let's collaborate to build a website that truly reflects your brand and drives tangible results.</p>
+		</div>
 	</div>
 	<div class="container mx-auto pt-16">
 		<section id="portfolio" class="portfolio-section">
@@ -103,3 +103,10 @@
 		<p>Based out of St Thomas, Ontario.</p>
 	</section>
 </div>
+
+<style>
+	.bg-gradient {
+		background: rgb(234,179,8);
+		background: linear-gradient(180deg, rgba(234,179,8,0) 50%, rgba(234,179,8,1) 50%, rgba(234,179,8,1) 100%);
+	}
+</style>
